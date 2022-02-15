@@ -1,7 +1,6 @@
-CREATE FUNCTION StudentEligible (
+CREATE PROCEDURE StudentEligible (
 	@StudentID int
 )
-RETURNS TABLE
 AS
 RETURN
 	SELECT
