@@ -1,0 +1,11 @@
+Name,ApplicationLink,AddressID
+('University of South Africa','http://www.usaf.ac.za/','7'),
+('University of the Witwatersrand Johannesburg','http://www.wits.ac.za/','8'),
+('SACAP (The South African College of Applied Psychology) Pretoria','http://www.sacap.edu.za/','9'),
+('University of Pretoria','https://www.up.ac.za/','10'),
+('St Augustine College of South Africa','http://www.staugustine.ac.za/','11'),
+('SAAAC - SA Academy of Applied Competence','http://www.saaac.co.za/','12'),
+('Tshwane University of Technology','http://www.tut.ac.za/',13),
+('IIE MSA',https://www.iiemsa.co.za/,'http://www.tut.ac.za/','14'),
+('Technicol SA College','http://www.technicolsa.co.za/','15'),
+('South African Defence Intelligence College','https://m.facebook.com/pages/SA-Defence-Intelligence-College/303792933062970','16')
