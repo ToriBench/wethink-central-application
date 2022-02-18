@@ -1,4 +1,4 @@
-ALTER PROCEDURE StudentEligible (
+CREATE PROCEDURE StudentEligible (
 	@StudentID int
 )
 AS
