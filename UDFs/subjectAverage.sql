@@ -1,9 +1,9 @@
 CREATE FUNCTION subjectAverage (
 	@SubjectID int
 	)
-	RETURNS int
+	RETURNS float
 	BEGIN
-		DECLARE @result int
-		SELECT @result = AVG(Results.Mark) FROM Results WHERE Results.SubjectID = @SubjectID
+		DECLARE @result float
+		SELECT @result = AVG(CAST(Results.Mark AS float)) FROM Results WHERE Results.SubjectID = @SubjectID
 	RETURN @result
 	END
