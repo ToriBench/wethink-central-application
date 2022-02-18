@@ -1,23 +1,30 @@
-CREATE PROCEDURE StudentEligible (
+ALTER PROCEDURE StudentEligible (
 	@StudentID int
 )
 AS
-RETURN
-	SELECT
+	SELECT DISTINCT
 		Institutions.[Name] AS 'Institution',
 		Faculties.[Name] AS 'Faculty',
 		Qualifications.[Name] AS 'Qualification'
 	FROM
-		Institutions,
-		Qualifications,
-		Faculties,
-		Students,
-		Requirements,
-		Results,
-		Subjects
+		Qualifications
+		INNER JOIN Faculties ON Qualifications.FacultyID = Faculties.FacultyID 
+		INNER JOIN Institutions ON Institutions.InstitutionID = Qualifications.InstitutionID,
+		Requirements
+		INNER JOIN
+		Subjects ON Subjects.SubjectID = Requirements.SubjectID,
+		Students
+		INNER JOIN Results ON Results.StudentID = Students.StudentID
 	WHERE
-		(Qualifications.QualificationID = Requirements.QualificationID
-		AND Requirements.SubjectID = Subjects.SubjectID AND Requirements.MinimumMark <= Results.Mark
-		AND Results.SubjectID = Subjects.SubjectID
-		AND Results.StudentID = @StudentID)
-		AND Faculties.FacultyID = Qualifications.FacultyID
+		(Results.StudentID = @StudentID 
+		AND Qualifications.QualificationID = Requirements.QualificationID
+		AND Results.SubjectID = Requirements.SubjectID
+		AND Requirements.MinimumMark <= Results.Mark)
+		
+		OR
+		Qualifications.QualificationID NOT IN
+		(SELECT Requirements.QualificationID FROM Requirements)
+
+	ORDER BY
+		'Institution'
+
