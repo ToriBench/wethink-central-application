@@ -1,7 +1,7 @@
 USE WeThinkDB
 GO
 
-CREATE VIEW viewQualificationsWithRequirements AS
+CREATE VIEW vQualificationsWithRequirements AS
 SELECT        dbo.Qualifications.QualificationID, dbo.Requirements.MinimumMark, dbo.Qualifications.MonthDuration, dbo.Subjects.Code, dbo.Subjects.Name, dbo.Institutions.Name AS Institution, dbo.Faculties.Name AS Faculty, 
                          dbo.Institutions.ApplicationLink
 FROM            dbo.Qualifications INNER JOIN
@@ -14,7 +14,7 @@ FROM            dbo.Qualifications INNER JOIN
 
 GO
 
-CREATE VIEW viewStudentsWithResults AS
+CREATE VIEW vStudentsWithResults AS
 SELECT        dbo.Users.FirstName, dbo.Users.LastName, dbo.Users.Email, dbo.Subjects.Code AS Subject_Code, dbo.Subjects.Name AS Subject_Name, dbo.Results.Mark
 FROM            dbo.Results INNER JOIN
                          dbo.Students ON dbo.Results.StudentID = dbo.Students.StudentID AND dbo.Results.StudentID = dbo.Students.StudentID INNER JOIN
@@ -23,14 +23,14 @@ FROM            dbo.Results INNER JOIN
 
 GO
 
-CREATE VIEW viewUsersWithRoles AS
+CREATE VIEW vUsersWithRoles AS
 SELECT        dbo.Users.FirstName, dbo.Users.LastName, dbo.Users.Email, dbo.UserRoles.UserRole
 FROM            dbo.UserRoles INNER JOIN
                          dbo.Users ON dbo.UserRoles.UserRoleID = dbo.Users.UserRoleID AND dbo.UserRoles.UserRoleID = dbo.Users.UserRoleID
 
 GO
 
-CREATE VIEW viewInstitutionsWithQualifications AS
+CREATE VIEW vInstitutionsWithQualifications AS
 SELECT        dbo.Institutions.Name AS Institution_Name, dbo.Faculties.Name AS Faculty_Name, dbo.Qualifications.Name AS Qualification_Name, dbo.Qualifications.AP_Score, dbo.Qualifications.Description AS Qualification_Descr, 
                          dbo.Qualifications.MonthDuration
 FROM            dbo.Faculties INNER JOIN
