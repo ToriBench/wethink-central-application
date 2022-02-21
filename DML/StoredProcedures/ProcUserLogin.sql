@@ -2,11 +2,11 @@
 USE WeThinkDB
 GO
 
-IF OBJECT_ID('ProcUserLogin', 'P') IS NOT NULL
-	DROP PROCEDURE ProcUserLogin
+IF OBJECT_ID('uspUserLogin', 'P') IS NOT NULL
+	DROP PROCEDURE uspUserLogin
 GO
 
-CREATE PROCEDURE ProcUserLogin(@email varchar(255), @password varchar(255))
+CREATE PROCEDURE uspUserLogin(@email varchar(255), @password varchar(255))
 	AS
 		SELECT UserID AS 'User ID',
 			   FirstName AS 'First Name',

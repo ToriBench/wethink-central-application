@@ -1,5 +1,8 @@
 /*	USER-ROLES TABLE*/
-CREATE PROCEDURE UpdateUserRole
+USE WeThinkDB
+GO
+
+CREATE PROCEDURE uspUpdateUserRole
 @UserRoleId int,
 @UserRole varchar(255)
 
@@ -22,7 +25,7 @@ END
 GO
 
 /* USERS TABLE*/
-CREATE PROCEDURE UpdateUser
+CREATE PROCEDURE uspUpdateUser
 @UserId int,
 @Email varchar(255),
 @FirstName varchar(255),
@@ -53,7 +56,7 @@ END
 GO
 
 /* SUBJECTS TABLE*/
-CREATE PROCEDURE UpdateSubject
+CREATE PROCEDURE uspUpdateSubject
 @SubjectId int,
 @Code varchar(255),
 @Name varchar(255)
@@ -79,7 +82,7 @@ GO
 
 /* STUDENTS TABLE*/
 
-CREATE PROCEDURE UpdateStudent
+CREATE PROCEDURE uspUpdateStudent
 @StudentId int,
 @UserId int,
 @AddressId int
@@ -105,7 +108,7 @@ GO
 
 /* RESULTS TABLE*/
 
-CREATE PROCEDURE UpdateResult
+CREATE PROCEDURE uspUpdateResult
 @StudentId int,
 @SubjectId int,
 @Mark int
@@ -132,7 +135,7 @@ GO
 
 /* REQUIREMENTS TABLE*/
 
-CREATE PROCEDURE UpdateRequirement
+CREATE PROCEDURE uspUpdateRequirement
 @QualificationId int,
 @SubjectId int,
 @MinimumMark int
@@ -158,7 +161,7 @@ END
 GO
 
 /* Qualifications TABLE */
-CREATE PROCEDURE UpdateQualification
+CREATE PROCEDURE uspUpdateQualification
 @QualificationId int,
 @InstitutionId int,
 @FacultyId int,
@@ -191,7 +194,7 @@ END
 GO
 
 /* INSTITUTIONS TABLE */ 
-CREATE PROCEDURE UpdateInstitution
+CREATE PROCEDURE uspUpdateInstitution
 @InstitutionId int,
 @Name varchar(255),
 @AddressId int,
@@ -219,7 +222,7 @@ END
 GO
 
 /* FACULITIES TABLE*/
-CREATE PROCEDURE UpdateFaculty
+CREATE PROCEDURE uspUpdateFaculty
 @FacultyId int,
 @Name varchar(255),
 @Descr varchar(255)
@@ -245,7 +248,7 @@ GO
 
 /* ADDRESSES TABLE*/
 
-CREATE PROCEDURE UpdateAddress
+CREATE PROCEDURE uspUpdateAddress
 @AddressID int,
 @StreetAddress varchar(255),
 @City varchar(255),

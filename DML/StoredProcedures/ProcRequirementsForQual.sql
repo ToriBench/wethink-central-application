@@ -1,6 +1,8 @@
 -- Get list of requirements for a given qualification
+USE WeThinkDB
+GO
 
-CREATE PROCEDURE QualificationRequirements( @QualificationID int)
+CREATE PROCEDURE uspQualificationRequirements( @QualificationID int)
 AS
 SELECT s.Code, s.Name, r.MinimumMark 
 FROM Requirements as r 

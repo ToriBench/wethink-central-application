@@ -1,7 +1,7 @@
 USE WeThinkDB
 GO
 /* USER ROLES TABLE*/
-CREATE PROCEDURE DeleteUserRole
+CREATE PROCEDURE uspDeleteUserRole
 @UserRoleID int
 AS
 BEGIN
@@ -12,7 +12,7 @@ END
 GO
 
 /* USERS TABLE*/
-CREATE PROCEDURE DeleteUser
+CREATE PROCEDURE uspDeleteUser
 @UserId int
 AS
 BEGIN
@@ -22,7 +22,7 @@ END
 GO
 
 /* STUDENTS TABLE*/
-CREATE PROCEDURE DeleteStudent
+CREATE PROCEDURE uspDeleteStudent
 @StudentID int
 AS
 BEGIN
@@ -32,7 +32,7 @@ END
 GO
 
 /* RESULTS TABLE*/
-CREATE PROCEDURE DeleteResult
+CREATE PROCEDURE uspDeleteResult
 @StudentID int,
 @SubjectID int
 AS
@@ -44,7 +44,7 @@ END
 GO
 
 /* SUBJECT TABLE*/
-CREATE PROCEDURE DeleteSubject
+CREATE PROCEDURE uspDeleteSubject
 @SubjectID int
 AS
 BEGIN
@@ -54,7 +54,7 @@ END
 GO
 
 /* INSTITUTION TABLE*/
-CREATE PROCEDURE DeleteInstitution
+CREATE PROCEDURE uspDeleteInstitution
 @InstitutionID int
 AS
 BEGIN
@@ -64,7 +64,7 @@ END
 GO
 
 /* FACULTIES TABLE*/
-CREATE PROCEDURE DeleteFaculty
+CREATE PROCEDURE uspDeleteFaculty
 @FacultyID int
 AS
 BEGIN
@@ -74,7 +74,7 @@ END
 GO
 
 /* QUALIFICATIONS TABLE*/
-CREATE PROCEDURE DeleteQualification
+CREATE PROCEDURE uspDeleteQualification
 @QualificationID int
 AS
 BEGIN
@@ -84,7 +84,7 @@ END
 GO
 
 /* REQUIREMENTS TABLE*/
-CREATE PROCEDURE DeleteRequirement
+CREATE PROCEDURE uspDeleteRequirement
 @RequirementID int
 AS
 BEGIN
@@ -94,7 +94,7 @@ END
 GO
 
 /* ADDRESSES TABLE*/
-CREATE PROCEDURE DeleteAddress
+CREATE PROCEDURE uspDeleteAddress
 @AddressID int
 AS
 BEGIN
@@ -104,7 +104,7 @@ END
 GO
 
 /* STUDENTQUALIFICATIONS TABLE*/
-CREATE PROCEDURE DeleteStudentQualification
+CREATE PROCEDURE uspDeleteStudentQualification
 @StudentID int,
 @QualificationID int
 AS
