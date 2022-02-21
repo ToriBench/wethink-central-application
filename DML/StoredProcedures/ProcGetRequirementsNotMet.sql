@@ -2,11 +2,11 @@
 USE WeThinkDB
 GO
 
-IF OBJECT_ID('ProcGetRequirementsNotMet', 'P') IS NOT NULL
-	DROP PROCEDURE ProcGetRequirementsNotMet
+IF OBJECT_ID('uspGetRequirementsNotMet', 'P') IS NOT NULL
+	DROP PROCEDURE uspGetRequirementsNotMet
 GO
 
-CREATE PROCEDURE ProcGetRequirementsNotMet(@studentId int, @qualificationId int)
+CREATE PROCEDURE uspGetRequirementsNotMet(@studentId int, @qualificationId int)
     AS
         SELECT Req.SubjectID
         FROM (

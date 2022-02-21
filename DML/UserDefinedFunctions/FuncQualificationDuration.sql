@@ -1,4 +1,7 @@
-CREATE FUNCTION getQualificationYears (
+USE WeThinkDB
+GO
+
+CREATE FUNCTION udfGetQualificationYears (
 	@QualificationID int
 )
 RETURNS varchar(255)

@@ -1,12 +1,12 @@
 USE WeThinkDB
 GO
 
-IF OBJECT_ID('TopPerformingStudents') IS NOT NULL
-	DROP PROCEDURE TopPerformingStudents
+IF OBJECT_ID('uspTopPerformingStudents') IS NOT NULL
+	DROP PROCEDURE uspTopPerformingStudents
 GO
 
 
-CREATE PROCEDURE TopPerformingStudents (
+CREATE PROCEDURE uspTopPerformingStudents (
 	@SubjectID int
 )
 AS

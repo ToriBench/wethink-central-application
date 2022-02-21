@@ -2,11 +2,11 @@
 USE WeThinkDB
 GO
 
-IF OBJECT_ID('ProcCalculateAPScore') IS NOT NULL
-    DROP PROCEDURE ProcCalculateAPScore
+IF OBJECT_ID('uspCalculateAPScore') IS NOT NULL
+    DROP PROCEDURE uspCalculateAPScore
 GO
 
-CREATE PROCEDURE ProcCalculateAPScore(@studentId int)
+CREATE PROCEDURE uspCalculateAPScore(@studentId int)
     AS
         SELECT SUM(APScore) AS 'AP Score'
         FROM (
