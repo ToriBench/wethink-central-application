@@ -16,11 +16,7 @@ AS
 		Subjects ON Subjects.SubjectID = Requirements.SubjectID,
 		vStudentsWithResults
 	WHERE
-		((SELECT dbo.udfCalculateAPScore(@StudentID)) > 4)
-
-		AND
-
-		((Students.ApScore >= Qualifications.AP_Score
+		(Students.ApScore >= Qualifications.AP_Score
 		AND
 		(Results.StudentID = @StudentID 
 		AND Qualifications.QualificationID = Requirements.QualificationID
@@ -29,7 +25,7 @@ AS
 		
 		OR
 		Qualifications.QualificationID NOT IN
-		(SELECT Requirements.QualificationID FROM Requirements))
+		(SELECT Requirements.QualificationID FROM Requirements)
 
 	ORDER BY
 		'Institution'
