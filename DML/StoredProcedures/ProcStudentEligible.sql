@@ -30,4 +30,3 @@ AS
 
 	ORDER BY
 		'Institution'
-
