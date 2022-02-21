@@ -2,12 +2,15 @@
 USE WeThinkDB
 GO
 
-IF OBJECT_ID('uspCalculateAPScore') IS NOT NULL
-    DROP PROCEDURE uspCalculateAPScore
+IF OBJECT_ID('udfCalculateAPScore') IS NOT NULL
+    DROP FUNCTION udfCalculateAPScore
 GO
 
-CREATE PROCEDURE uspCalculateAPScore(@studentId int)
+CREATE FUNCTION udfCalculateAPScore(@studentId int)
+    RETURNS int
     AS
+    BEGIN
+    RETURN(
         SELECT SUM(APScore) AS 'AP Score'
         FROM (
             SELECT
@@ -24,5 +27,6 @@ CREATE PROCEDURE uspCalculateAPScore(@studentId int)
                     FROM Results
                     WHERE StudentID = @studentId
                 ) AS TopMarks
-        ) AS APScores
+        ) AS APScores)
+    END
 GO
