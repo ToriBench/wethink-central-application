@@ -10,7 +10,7 @@ AS
 		Faculties.[Name] AS 'Faculty',
 		Courses.[Name] AS 'Course'
 	FROM
-		vInstitutionsWithQualifications,
+		vInstitutionsWithCourses,
 		Requirements
 		INNER JOIN
 		Subjects ON Subjects.SubjectID = Requirements.SubjectID,
