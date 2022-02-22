@@ -8,24 +8,24 @@ AS
 	SELECT DISTINCT
 		Institutions.[Name] AS 'Institution',
 		Faculties.[Name] AS 'Faculty',
-		Qualifications.[Name] AS 'Qualification'
+		Courses.[Name] AS 'Course'
 	FROM
-		vInstitutionsWithQualifications,
+		vInstitutionsWithCourses,
 		Requirements
 		INNER JOIN
 		Subjects ON Subjects.SubjectID = Requirements.SubjectID,
 		vStudentsWithResults
 	WHERE
-		(Students.ApScore >= Qualifications.AP_Score
+		(Students.ApScore >= Courses.AP_Score
 		AND
 		(Results.StudentID = @StudentID 
-		AND Qualifications.QualificationID = Requirements.QualificationID
+		AND Courses.CourseID = Requirements.CourseID
 		AND Results.SubjectID = Requirements.SubjectID
 		AND Requirements.MinimumMark <= Results.Mark))
 		
 		OR
-		Qualifications.QualificationID NOT IN
-		(SELECT Requirements.QualificationID FROM Requirements)
+		Courses.CourseID NOT IN
+		(SELECT Requirements.CourseID FROM Requirements)
 
 	ORDER BY
 		'Institution'

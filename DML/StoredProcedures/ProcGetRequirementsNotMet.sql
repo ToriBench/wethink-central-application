@@ -6,13 +6,13 @@ IF OBJECT_ID('uspGetRequirementsNotMet', 'P') IS NOT NULL
 	DROP PROCEDURE uspGetRequirementsNotMet
 GO
 
-CREATE PROCEDURE uspGetRequirementsNotMet(@studentId int, @qualificationId int)
+CREATE PROCEDURE uspGetRequirementsNotMet(@studentId int, @courseId int)
     AS
         SELECT Req.SubjectID
         FROM (
             SELECT SubjectID, MinimumMark
             FROM Requirements
-            WHERE QualificationID = @qualificationId
+            WHERE courseId = @courseId
         ) AS Req
         LEFT JOIN (
             SELECT SubjectID, Mark
