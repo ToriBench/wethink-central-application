@@ -1,7 +1,7 @@
 USE WeThinkDB
 GO
 
-ALTER PROCEDURE uspStudentEligible (
+CREATE PROCEDURE uspStudentEligible (
 	@StudentID int
 )
 AS
@@ -10,19 +10,18 @@ AS
 		Faculties.[Name] AS 'Faculty',
 		Qualifications.[Name] AS 'Qualification'
 	FROM
-		Qualifications
-		INNER JOIN Faculties ON Qualifications.FacultyID = Faculties.FacultyID 
-		INNER JOIN Institutions ON Institutions.InstitutionID = Qualifications.InstitutionID,
+		vInstitutionsWithQualifications,
 		Requirements
 		INNER JOIN
 		Subjects ON Subjects.SubjectID = Requirements.SubjectID,
-		Students
-		INNER JOIN Results ON Results.StudentID = Students.StudentID
+		vStudentsWithResults
 	WHERE
+		(Students.ApScore >= Qualifications.AP_Score
+		AND
 		(Results.StudentID = @StudentID 
 		AND Qualifications.QualificationID = Requirements.QualificationID
 		AND Results.SubjectID = Requirements.SubjectID
-		AND Requirements.MinimumMark <= Results.Mark)
+		AND Requirements.MinimumMark <= Results.Mark))
 		
 		OR
 		Qualifications.QualificationID NOT IN
