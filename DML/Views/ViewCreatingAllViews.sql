@@ -1,14 +1,14 @@
 USE WeThinkDB
 GO
 
-CREATE VIEW vQualificationsWithRequirements AS
-SELECT        dbo.Qualifications.QualificationID, dbo.Requirements.MinimumMark, dbo.Qualifications.MonthDuration, dbo.Subjects.Code, dbo.Subjects.Name, dbo.Institutions.Name AS Institution, dbo.Faculties.Name AS Faculty, 
+CREATE VIEW vCoursesWithRequirements AS
+SELECT        dbo.Courses.CourseID, dbo.Requirements.MinimumMark, dbo.Courses.MonthDuration, dbo.Subjects.Code, dbo.Subjects.Name, dbo.Institutions.Name AS Institution, dbo.Faculties.Name AS Faculty, 
                          dbo.Institutions.ApplicationLink
-FROM            dbo.Qualifications INNER JOIN
-                         dbo.Requirements ON dbo.Qualifications.QualificationID = dbo.Requirements.QualificationID AND dbo.Qualifications.QualificationID = dbo.Requirements.QualificationID INNER JOIN
+FROM            dbo.Courses INNER JOIN
+                         dbo.Requirements ON dbo.Courses.CourseID = dbo.Requirements.CourseID AND dbo.Courses.CourseID = dbo.Requirements.CourseID INNER JOIN
                          dbo.Subjects ON dbo.Requirements.SubjectID = dbo.Subjects.SubjectID AND dbo.Requirements.SubjectID = dbo.Subjects.SubjectID INNER JOIN
-                         dbo.Faculties ON dbo.Qualifications.FacultyID = dbo.Faculties.FacultyID AND dbo.Qualifications.FacultyID = dbo.Faculties.FacultyID INNER JOIN
-                         dbo.Institutions ON dbo.Qualifications.InstitutionID = dbo.Institutions.InstitutionID AND dbo.Qualifications.InstitutionID = dbo.Institutions.InstitutionID
+                         dbo.Faculties ON dbo.Courses.FacultyID = dbo.Faculties.FacultyID AND dbo.Courses.FacultyID = dbo.Faculties.FacultyID INNER JOIN
+                         dbo.Institutions ON dbo.Courses.InstitutionID = dbo.Institutions.InstitutionID AND dbo.Courses.InstitutionID = dbo.Institutions.InstitutionID
 
 						 
 
@@ -30,9 +30,9 @@ FROM            dbo.UserRoles INNER JOIN
 
 GO
 
-CREATE VIEW vInstitutionsWithQualifications AS
-SELECT        dbo.Institutions.Name AS Institution_Name, dbo.Faculties.Name AS Faculty_Name, dbo.Qualifications.Name AS Qualification_Name, dbo.Qualifications.AP_Score, dbo.Qualifications.Description AS Qualification_Descr, 
-                         dbo.Qualifications.MonthDuration
+CREATE VIEW vInstitutionsWithCourses AS
+SELECT        dbo.Institutions.Name AS Institution_Name, dbo.Faculties.Name AS Faculty_Name, dbo.Courses.Name AS Qualification_Name, dbo.Courses.APScore, dbo.Courses.Description AS Qualification_Descr, 
+                         dbo.Courses.MonthDuration
 FROM            dbo.Faculties INNER JOIN
-                         dbo.Qualifications ON dbo.Faculties.FacultyID = dbo.Qualifications.FacultyID AND dbo.Faculties.FacultyID = dbo.Qualifications.FacultyID INNER JOIN
-                         dbo.Institutions ON dbo.Qualifications.InstitutionID = dbo.Institutions.InstitutionID AND dbo.Qualifications.InstitutionID = dbo.Institutions.InstitutionID
+                         dbo.Courses ON dbo.Faculties.FacultyID = dbo.Courses.FacultyID AND dbo.Faculties.FacultyID = dbo.Courses.FacultyID INNER JOIN
+                         dbo.Institutions ON dbo.Courses.InstitutionID = dbo.Institutions.InstitutionID AND dbo.Courses.InstitutionID = dbo.Institutions.InstitutionID
