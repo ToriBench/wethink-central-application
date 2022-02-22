@@ -34,7 +34,7 @@ GO
 CREATE TABLE [dbo].[Users](
 	[UserID] [int] IDENTITY(1,1) NOT NULL,
 	[Email] [varchar](255) NOT NULL,
-	[PasswordHash] [varchar](255) NULL,
+	[PasswordHash] [varchar](255) NOT NULL,
 	[UserRoleID] [int] NULL,
 CONSTRAINT PK_Users PRIMARY KEY CLUSTERED
 (
@@ -49,7 +49,7 @@ CREATE TABLE [dbo].[Students](
 	[StudentID] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [varchar](255) NOT NULL,
 	[LastName] [varchar](255) NOT NULL,
-	[UserID] [int] NULL,
+	[UserID] [int] NOT NULL,
 	[AddressID] [int] NULL,
 	[ApScore] [int] NULL,
 CONSTRAINT PK_Students PRIMARY KEY CLUSTERED 
