@@ -35,7 +35,7 @@ CREATE TABLE [dbo].[Users](
 	[UserID] [int] IDENTITY(1,1) NOT NULL,
 	[Email] [varchar](255) NOT NULL,
 	[PasswordHash] [varchar](255) NOT NULL,
-	[UserRoleID] [int] NULL,
+	[UserRoleID] [int] NOT NULL,
 CONSTRAINT PK_Users PRIMARY KEY CLUSTERED
 (
 	[UserID] ASC
