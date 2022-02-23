@@ -59,12 +59,12 @@ INSERT INTO [dbo].[Institutions] ([Name],ApplicationLink,AddressID)
 ('South African Defence Intelligence College','https://m.facebook.com/pages/SA-Defence-Intelligence-College/303792933062970','16')
 GO
 
-INSERT INTO [dbo].[Qualifications]([Name], NQFLevel, [Description])
-	VALUES ('Higher Certificate', 5, ' A Higher Certificate is a skills focused qualification.'),
-		('National Diploma', 6, 'Offers career-orientated training with the aim of preparing students for the work environment.'),
-		('Bachelor''s Degree', 7, 'A bachelors degree is an academic degree earned for an undergraduate course of study that could range in length of time.'),
-		('Honours Degree', 8, 'The Bachelor Honours Degree is a postgraduate specialisation qualification, characterised by the fact that it prepares students for research-based postgraduate study.'),
-		('Master''s Degree', 9, 'The Master''s degree is an academic degree awarded by universities or colleges upon completion of a course of study demonstrating mastery or a high-order overview of a specific field of study or area of professional practice.')
+INSERT INTO [dbo].[Qualifications]([Name], NQFLevel)
+	VALUES ('Higher Certificate', 5),
+		('National Diploma', 6),
+		('Bachelor''s Degree', 7),
+		('Honours Degree', 8),
+		('Master''s Degree', 9)
 GO
 
 INSERT INTO [dbo].[Courses](InstitutionID,FacultyID,[Name],MonthDuration,[Description],ApScore, QualificationID)
@@ -110,7 +110,7 @@ INSERT INTO [dbo].[UserRoles] (UserRole)
 		('Student')
 GO
 
-INSERT INTO [dbo].[Users] (Email,[PasswordHash],UserRoleID, FirstName, LastName)
+INSERT INTO [dbo].[Users] (Email,[PasswordHash],UserRoleID)
 	VALUES ('chuckie@mintdex.com','fvfdv511vsdv168sv515',2,'Chuckies','Pride'),
 	('lance@trudo.com','hrthrthgbdfsb61262',2,'Lance','Meadow'),
 	('mjabu@wowwer.com','dhbshgn631b621b6gn1b',2,'Mfana','Jabu'),
@@ -128,12 +128,12 @@ INSERT INTO [dbo].[Users] (Email,[PasswordHash],UserRoleID, FirstName, LastName)
 	('jambor@zoneone.com','yujtdffjjedvbghjyu',2,'Rulani','Jambor'),
 	('zach@babruce.com','yuk326j52yuk62h62',2, 'Zachary', 'Henry'),
 	('judy@hiber.com','tyuiyuegsderyjdf',2, 'Judy', 'Moncada'),
-	('nlilly@mintra.com','yjfgegtjdfbhg',2,'Nicole','Lilly'),
+	('nlilly@mintra.com','yjfgegtjdfbhg',2),
 	('mikez@babruce.com','yuk326j52yuk62h62',1, 'Mike', 'Zobo'),
 	('ymanny@hiber.com','xcv621xz6v12x612xc3v1',1, 'Yaseen', 'Manny')
 GO
 
-INSERT INTO [dbo].[Students](UserID,AddressID)
+INSERT INTO [dbo].[Students](UserID,AddressID, FirstName, LastName)
 	VALUES(1,1),
 		(2,2),
 		(3,2),
@@ -151,7 +151,7 @@ INSERT INTO [dbo].[Students](UserID,AddressID)
 		(15,15),
 		(16,22),
 		(17,19),
-		(18,20)
+		(18,20,'Nicole','Lilly')
 GO
 
 INSERT INTO [dbo].[Subjects]([Name],Code)
@@ -376,7 +376,7 @@ INSERT INTO [dbo].[Results] (StudentID,SubjectID,Mark)
 		(18, 12,40)
 GO
 
-INSERT INTO [dbo].[StudentCourses](StudentID, CourseID)
+INSERT INTO [dbo].[StudentSavedCourses](StudentID, CourseID)
 	VALUES (1, 12),
 		(9, 2),  
 		(18, 28),
