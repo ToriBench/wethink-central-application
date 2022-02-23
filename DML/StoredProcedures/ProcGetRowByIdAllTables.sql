@@ -1,7 +1,7 @@
 USE WeThinkDB
 GO
 
-CREATE PROC GetUserById(@id int)
+CREATE PROC uspGetUserById(@id int)
 AS
 BEGIN
      Select * from Users where
@@ -9,7 +9,7 @@ BEGIN
 END
 GO
 
-CREATE PROC GetUserRoleById(@id int)
+CREATE PROC uspGetUserRoleById(@id int)
 AS
 BEGIN
   SELECT * FROM UserRoles 
@@ -17,7 +17,7 @@ BEGIN
   END
 GO
 
-CREATE PROC GetStudentById(@id int)
+CREATE PROC uspGetStudentById(@id int)
 AS
 BEGIN
   SELECT * FROM Students
@@ -25,7 +25,7 @@ BEGIN
   END
 GO
 
-CREATE PROC GetResultsById(@StudentId int, @SubjectId int)
+CREATE PROC uspGetResultsById(@StudentId int, @SubjectId int)
 AS
 BEGIN 
    SELECT * FROM Results
@@ -35,7 +35,7 @@ BEGIN
    END
 GO
 
-CREATE PROC GetSubjectById(@Id int)
+CREATE PROC uspGetSubjectById(@Id int)
 AS
 BEGIN
     SELECT * FROM Subjects
@@ -44,7 +44,7 @@ BEGIN
 	END
 GO
 
-CREATE PROC GetAddressById(@Id int)
+CREATE PROC uspGetAddressById(@Id int)
 AS
 BEGIN
     SELECT * FROM Addresses
@@ -53,7 +53,7 @@ BEGIN
 
 GO
 
-CREATE PROC GetInstitutitionById(@Id int)
+CREATE PROC uspGetInstitutitionById(@Id int)
 AS
 BEGIN
     SELECT * FROM Institutions
@@ -62,7 +62,7 @@ BEGIN
 
 GO
 
-CREATE PROC GetQualificationById(@Id int)
+CREATE PROC uspGetQualificationById(@Id int)
 AS
 BEGIN
    SELECT * FROM Qualifications
@@ -71,13 +71,21 @@ BEGIN
 
 GO
 
-CREATE PROC GetRequirementById(@QualificationId int, @SubjectId int)
+CREATE PROC uspGetRequirementById(@QualificationId int, @SubjectId int)
 AS
 BEGIN 
     SELECT * FROM Requirements
 	WHERE QualificationID = @QualificationId
 	AND
 	SubjectID = @SubjectId
+	END
+
+GO
+CREATE PROC uspGetCourseById(@ID int)
+AS 
+BEGIN
+    SELECT * FROM [dbo].[Courses]
+	WHERE CourseID = @ID
 	END
 
 GO
