@@ -33,7 +33,7 @@ AS
 		(CASE @City
 			WHEN 1 THEN
 				Addresses.AddressID = Institutions.InstitutionID 
-				AND Addresses.City = Students.City 
+				AND LOWER(Addresses.City) = LOWER(Students.City) 
 				AND Students.StudentID = @StudentID
 		)
 		
