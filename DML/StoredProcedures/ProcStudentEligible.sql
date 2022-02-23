@@ -18,6 +18,7 @@ AS
 		vStudentsWithResults,
 		Addresses
 	WHERE
+
 		(Students.ApScore >= Courses.ApScore
 		AND
 		((Results.StudentID = @StudentID 
