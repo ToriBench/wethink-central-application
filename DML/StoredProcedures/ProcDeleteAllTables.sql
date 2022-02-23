@@ -83,6 +83,16 @@ BEGIN
 END
 GO
 
+/* QUALIFICATIONS TABLE*/
+CREATE PROCEDURE uspDeleteCourse
+@CourseID int
+AS
+BEGIN
+	   DELETE FROM [dbo].[Courses]
+	   WHERE CourseID=@CourseID
+END
+GO
+
 /* REQUIREMENTS TABLE*/
 CREATE PROCEDURE uspDeleteRequirement
 @RequirementID int

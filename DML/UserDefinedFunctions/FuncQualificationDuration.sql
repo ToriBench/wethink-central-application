@@ -1,8 +1,8 @@
 USE WeThinkDB
 GO
 
-CREATE FUNCTION udfGetQualificationYears (
-	@QualificationID int
+CREATE FUNCTION udfGetCourseYears (
+	@CourseID int
 )
 RETURNS varchar(255)
 AS
@@ -10,7 +10,7 @@ BEGIN
 	DECLARE @duration int,
 			@returnString varchar(255)
 
-	SELECT @duration = MonthDuration FROM Qualifications WHERE QualificationID = @QualificationID
+	SELECT @duration = MonthDuration FROM Courses WHERE CourseID = @CourseID
 
 	IF (@duration/12 > 0) 
 		SET	@returnString = CONCAT(CAST(@duration/12 AS varchar(80)),' years');
