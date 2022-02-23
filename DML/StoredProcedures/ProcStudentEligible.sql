@@ -1,31 +1,41 @@
 USE WeThinkDB
 GO
 
-CREATE PROCEDURE uspStudentEligible (
-	@StudentID int
+CREATE PROCEDURE [dbo].[uspStudentEligible] (
+	@StudentID int NOT NULL,
+	@City int NULL
 )
 AS
 	SELECT DISTINCT
 		Institutions.[Name] AS 'Institution',
 		Faculties.[Name] AS 'Faculty',
-		Qualifications.[Name] AS 'Qualification'
+		Courses.[Name] AS 'Course'
 	FROM
-		vInstitutionsWithQualifications,
+		vInstitutionsWithCourses,
 		Requirements
 		INNER JOIN
 		Subjects ON Subjects.SubjectID = Requirements.SubjectID,
-		vStudentsWithResults
+		vStudentsWithResults,
+		Addresses
 	WHERE
-		(Students.ApScore >= Qualifications.AP_Score
+		(Students.ApScore >= Courses.ApScore
 		AND
-		(Results.StudentID = @StudentID 
-		AND Qualifications.QualificationID = Requirements.QualificationID
+		((Results.StudentID = @StudentID 
+		AND Courses.CourseID = Requirements.CourseID
 		AND Results.SubjectID = Requirements.SubjectID
-		AND Requirements.MinimumMark <= Results.Mark))
-		
-		OR
-		Qualifications.QualificationID NOT IN
-		(SELECT Requirements.QualificationID FROM Requirements)
+		AND Requirements.MinimumMark <= Results.Mark)
 
+		OR
+		Courses.CourseID NOT IN
+		(SELECT Requirements.CourseID FROM Requirements)))
+
+		AND
+		(CASE @City
+			WHEN 1 THEN
+				Addresses.AddressID = Institutions.InstitutionID 
+				AND Addresses.City = Students.City 
+				AND Students.StudentID = @StudentID
+		)
+		
 	ORDER BY
 		'Institution'

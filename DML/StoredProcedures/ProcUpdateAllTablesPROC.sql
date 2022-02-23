@@ -136,7 +136,7 @@ GO
 /* REQUIREMENTS TABLE*/
 
 CREATE PROCEDURE uspUpdateRequirement
-@QualificationId int,
+@CourseId int,
 @SubjectId int,
 @MinimumMark int
 
@@ -147,7 +147,7 @@ BEGIN TRANSACTION
 
 update [dbo].[Requirements]
 set MinimumMark = @MinimumMark
-where QualificationID = @QualificationId 
+where CourseId = @CourseId 
 AND 
 SubjectID = @SubjectId
 
@@ -160,28 +160,57 @@ COMMIT TRANSACTION
 END
 GO
 
-/* Qualifications TABLE */
-CREATE PROCEDURE uspUpdateQualification
+/* Courses TABLE */
+CREATE PROCEDURE uspUpdateCourse
+@CourseId int,
 @QualificationId int,
 @InstitutionId int,
 @FacultyId int,
 @MonthDuration int,
 @Name varchar(255),
 @Descr varchar(255),
-@APScorer int
+@APS int
 
 AS
 BEGIN
 
 BEGIN TRANSACTION
 
-update [dbo].[Qualifications]
-set InstitutionID = @InstitutionId,
+update [dbo].[Courses]
+set  QualificationID = @QualificationId,
+InstitutionID = @InstitutionId,
 FacultyID = @FacultyId,
 MonthDuration = @MonthDuration,
 [Name] = @Name,
 [Description] = @Descr,
-AP_Score = @APScorer
+APScore = @APS
+where CourseID = @CourseId 
+
+if @@Error <> 0
+begin
+ROLLBACK TRANSACTION
+return
+end
+COMMIT TRANSACTION
+END
+GO
+
+/* Qualification TABLE */
+CREATE PROCEDURE uspUpdateQualification
+@QualificationId int,
+@NQF int,
+@Name varchar(255),
+@Descr varchar(255)
+
+AS
+BEGIN
+
+BEGIN TRANSACTION
+
+update [dbo].[Qualification]
+set  NQFLevel = @NQF,
+[Name] = @Name,
+[Description] = @Descr
 where QualificationID = @QualificationId 
 
 if @@Error <> 0
