@@ -2,8 +2,8 @@ USE WeThinkDB
 GO
 
 CREATE PROCEDURE [dbo].[uspStudentEligible] (
-	@StudentID int NOT NULL,
-	@City int NULL
+	@StudentID int,
+	@Province int
 )
 AS
 	SELECT DISTINCT
@@ -25,16 +25,18 @@ AS
 		AND Results.SubjectID = Requirements.SubjectID
 		AND Requirements.MinimumMark <= Results.Mark)
 
+
 		OR
 		Courses.CourseID NOT IN
 		(SELECT Requirements.CourseID FROM Requirements)))
 
 		AND
-		(CASE @City
-			WHEN 1 THEN
-				Addresses.AddressID = Institutions.InstitutionID 
-				AND LOWER(Addresses.City) = LOWER(Students.City) 
-				AND Students.StudentID = @StudentID
+		(@Province = 1
+		AND
+		Addresses.AddressID = Institutions.AddressID 
+		AND Addresses.Province = 
+		(SELECT Addresses.Province FROM Addresses, Students
+		WHERE Addresses.AddressID = Students.AddressID AND Students.StudentID = @StudentID)
 		)
 		
 	ORDER BY
