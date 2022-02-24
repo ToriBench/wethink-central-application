@@ -82,10 +82,14 @@ GO
 
 CREATE TABLE [dbo].[Faculties](
 	[FacultyID] [int] IDENTITY(1,1) NOT NULL,
+	[InstitutionID] [int] NOT NULL,
 	[Name] [varchar](255) NOT NULL,
 	[Description] [varchar](255) NULL,
 	CONSTRAINT [PK_Faculties] PRIMARY KEY CLUSTERED (
 		FacultyID ASC
+	),
+	UNIQUE (
+		[InstitutionID],[Name]
 	)
 )
 GO
