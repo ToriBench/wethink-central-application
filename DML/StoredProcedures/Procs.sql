@@ -202,11 +202,31 @@ GO
 CREATE PROCEDURE uspCourseRequirements( @CourseID int)
 -- Gets the subject requirements of a given course 
 AS
+BEGIN TRY
+	IF ((SELECT COUNT(*) FROM Courses WHERE CourseID = @CourseID) = 0)
+			RAISERROR('Invalid Course ID.', 11, 1)
+
 	SELECT Sub.[Code], Sub.[Name], Req.[MinimumMark] 
 	FROM [dbo].[Requirements] as Req
 	INNER JOIN [Subjects] as Sub 
 		ON Req.[SubjectID] = Sub.[SubjectID] 
 	WHERE Req.[CourseID] = @CourseID
+END TRY
+BEGIN CATCH
+  SELECT
+    ERROR_NUMBER() AS ErrorNumber,
+    ERROR_STATE() AS ErrorState,
+    ERROR_SEVERITY() AS ErrorSeverity,
+    ERROR_PROCEDURE() AS ErrorProcedure,
+    ERROR_LINE() AS ErrorLine,
+    ERROR_MESSAGE() AS ErrorMessage;
+
+	DECLARE @ErrorMessage varchar(MAX) = ERROR_MESSAGE(),
+    @Severity int = ERROR_SEVERITY(),
+    @State smallint = ERROR_STATE()
+ 
+	RAISERROR (@ErrorMessage, @Severity, @State)
+END CATCH
 GO
 
 USE WeThinkDB
@@ -350,6 +370,12 @@ GO
 CREATE PROCEDURE uspGetRequirementsNotMet(@StudentID int, @CourseID int)
 -- Gets a student's subjects which do not meet the requirements of a particular course
     AS
+	BEGIN TRY
+	IF(@CourseID NOT IN (SELECT CourseID FROM Courses))
+			RAISERROR('Invalid Course ID.', 11, 1)
+	IF(@StudentID NOT IN (SELECT StudentID FROM Students))
+			RAISERROR('Invalid Student ID.', 11, 1)
+
         SELECT Req.[SubjectID], Req.[Name]
         FROM (
             SELECT Require.[SubjectID], Require.[MinimumMark], Sub.[Name]
@@ -366,6 +392,22 @@ CREATE PROCEDURE uspGetRequirementsNotMet(@StudentID int, @CourseID int)
         ON Res.[SubjectID] = Req.[SubjectID]
         WHERE Res.[Mark] < Req.[MinimumMark] OR Res.[SubjectID] IS NULL
         GROUP BY Req.[SubjectID], Req.[Name]
+	END TRY
+	BEGIN CATCH
+		SELECT
+		ERROR_NUMBER() AS ErrorNumber,
+		ERROR_STATE() AS ErrorState,
+		ERROR_SEVERITY() AS ErrorSeverity,
+		ERROR_PROCEDURE() AS ErrorProcedure,
+		ERROR_LINE() AS ErrorLine,
+		ERROR_MESSAGE() AS ErrorMessage;
+
+		DECLARE @ErrorMessage varchar(MAX) = ERROR_MESSAGE(),
+        @Severity int = ERROR_SEVERITY(),
+        @State smallint = ERROR_STATE()
+ 
+		RAISERROR (@ErrorMessage, @Severity, @State)
+	END CATCH
 GO
 
 USE WeThinkDB
@@ -466,40 +508,78 @@ CREATE OR ALTER PROCEDURE [dbo].[uspStudentEligible] (
 	@StudentID int
 )
 AS
-	SELECT DISTINCT
-		vInstitutionsWithCourses.Institution_Name AS 'Institution',
-		vInstitutionsWithCourses.Faculty_Name AS 'Faculty',
-		vInstitutionsWithCourses.Course_Name AS 'Course'
-	FROM
-	vInstitutionsWithCourses,
-	Requirements
-	INNER JOIN
-	Subjects ON Subjects.SubjectID= Requirements.SubjectID,
-	Students
-	INNER JOIN 
-	Results ON Students.StudentID = Results.StudentID
+	BEGIN TRY
+		IF((SELECT COUNT(*) FROM Students WHERE StudentID = @StudentID) = 0)
+			RAISERROR('Invalid Student ID.', 11, 1)
+		SELECT DISTINCT
+			vInstitutionsWithCourses.Institution_Name AS 'Institution',
+			vInstitutionsWithCourses.Faculty_Name AS 'Faculty',
+			vInstitutionsWithCourses.Course_Name AS 'Course'
+		FROM
+		vInstitutionsWithCourses,
+		Requirements
+		INNER JOIN
+		Subjects ON Subjects.SubjectID= Requirements.SubjectID,
+		Students
+		INNER JOIN 
+		Results ON Students.StudentID = Results.StudentID
 
-	WHERE
-	Students.ApScore>= vInstitutionsWithCourses.ApScore
-	AND
-	(Results.StudentID= @StudentID
-	AND vInstitutionsWithCourses.CourseID= Requirements.CourseID
-	AND Results.SubjectID= Requirements.SubjectID
-	AND Requirements.MinimumMark<= Results.Mark)
-	OR vInstitutionsWithCourses.CourseID NOT IN 
-	(SELECT Requirements.CourseID FROM Requirements)
+		WHERE
+		Students.ApScore>= vInstitutionsWithCourses.ApScore
+		AND
+		(Results.StudentID= @StudentID
+		AND vInstitutionsWithCourses.CourseID= Requirements.CourseID
+		AND Results.SubjectID= Requirements.SubjectID
+		AND Requirements.MinimumMark<= Results.Mark)
+		OR vInstitutionsWithCourses.CourseID NOT IN 
+		(SELECT Requirements.CourseID FROM Requirements)
 		
-	ORDER BY
-		'Institution'
+		ORDER BY
+			'Institution'
+		END TRY
+	BEGIN CATCH
+		SELECT
+			ERROR_NUMBER() AS ErrorNumber,
+			ERROR_STATE() AS ErrorState,
+			ERROR_SEVERITY() AS ErrorSeverity,
+			ERROR_PROCEDURE() AS ErrorProcedure,
+			ERROR_LINE() AS ErrorLine,
+			ERROR_MESSAGE() AS ErrorMessage;
+
+		DECLARE @ErrorMessage varchar(MAX) = ERROR_MESSAGE(),
+		@Severity int = ERROR_SEVERITY(),
+		@State smallint = ERROR_STATE()
+ 
+		RAISERROR (@ErrorMessage, @Severity, @State)
+	END CATCH
 GO
 
 -- Gets a student's results 
 CREATE PROCEDURE uspStudentResults( @StudentID int )
 AS
-	SELECT Sub.[Code], Sub.[Name], Res.[Mark] FROM [dbo].[Results] as Res
-	INNER JOIN [dbo].[Subjects] as Sub 
-		ON Res.[SubjectID] = Sub.[SubjectID]
-	WHERE Res.[StudentID] = @StudentID
+	BEGIN TRY
+		IF(@StudentID NOT IN (SELECT StudentID FROM Students))
+				RAISERROR('Invalid Student ID.', 11, 1)
+		SELECT Sub.[Code], Sub.[Name], Res.[Mark] FROM [dbo].[Results] as Res
+		INNER JOIN [dbo].[Subjects] as Sub 
+			ON Res.[SubjectID] = Sub.[SubjectID]
+		WHERE Res.[StudentID] = @StudentID
+	END TRY
+	BEGIN CATCH
+		SELECT
+		ERROR_NUMBER() AS ErrorNumber,
+		ERROR_STATE() AS ErrorState,
+		ERROR_SEVERITY() AS ErrorSeverity,
+		ERROR_PROCEDURE() AS ErrorProcedure,
+		ERROR_LINE() AS ErrorLine,
+		ERROR_MESSAGE() AS ErrorMessage;
+
+		DECLARE @ErrorMessage varchar(MAX) = ERROR_MESSAGE(),
+        @Severity int = ERROR_SEVERITY(),
+        @State smallint = ERROR_STATE()
+ 
+		RAISERROR (@ErrorMessage, @Severity, @State)
+	END CATCH
 GO
 
 USE WeThinkDB
@@ -515,6 +595,9 @@ CREATE PROCEDURE uspTopPerformingStudents (
 	@n int = NULL
 )
 AS
+	BEGIN TRY
+		IF(@SubjectID NOT IN (SELECT SubjectID FROM Subjects))
+				RAISERROR('Invalid subject id.', 11, 1)
 	IF NOT @n IS NULL
 		SELECT TOP (@n)
 			[Mark] as 'Marks',
@@ -542,48 +625,27 @@ AS
 			AND Users.UserID = Students.UserID
 		ORDER BY Mark DESC;
 RETURN
+	END TRY
+	BEGIN CATCH
+		SELECT
+		ERROR_NUMBER() AS ErrorNumber,
+		ERROR_STATE() AS ErrorState,
+		ERROR_SEVERITY() AS ErrorSeverity,
+		ERROR_PROCEDURE() AS ErrorProcedure,
+		ERROR_LINE() AS ErrorLine,
+		ERROR_MESSAGE() AS ErrorMessage;
+
+		DECLARE @ErrorMessage varchar(MAX) = ERROR_MESSAGE(),
+        @Severity int = ERROR_SEVERITY(),
+        @State smallint = ERROR_STATE()
+ 
+	RAISERROR (@ErrorMessage, @Severity, @State)
+	END CATCH
 GO
 USE WeThinkDB
 GO
 
-IF OBJECT_ID('uspTopPerformingStudents') IS NOT NULL
-	DROP PROCEDURE uspTopPerformingStudents
-GO
 
--- Gets the top n students where n is specified. Gets top 10 by default. 
-CREATE PROCEDURE uspTopPerformingStudents (
-	@SubjectID int,
-	@n int = NULL
-)
-AS
-	IF NOT @n IS NULL
-		SELECT TOP (@n)
-			[Mark] as 'Marks',
-			[FirstName] as 'Name',
-			[LastName] as 'LastName',
-			[dbo].[Students].[UserID] as 'UserID',
-			Students.[StudentID] as 'StudentID'
-		FROM [dbo].[Results], [dbo].[Students], [dbo].[Users]
-		WHERE
-			SubjectID = @SubjectID
-			AND Results.StudentID = Students.StudentID
-			AND Users.UserID = Students.UserID
-		ORDER BY Mark DESC;
-	ELSE 
-		SELECT TOP 10
-			[Mark] as 'Marks',
-			[FirstName] as 'Name',
-			[LastName] as 'LastName',
-			[dbo].[Students].[UserID] as 'UserID',
-			Students.[StudentID] as 'StudentID'
-		FROM [dbo].[Results], [dbo].[Students], [dbo].[Users]
-		WHERE
-			SubjectID = @SubjectID
-			AND Results.StudentID = Students.StudentID
-			AND Users.UserID = Students.UserID
-		ORDER BY Mark DESC;
-RETURN
-GO
 /*	USER-ROLES TABLE*/
 USE WeThinkDB
 GO
@@ -892,8 +954,28 @@ GO
 
 CREATE PROCEDURE uspUserLogin(@Email varchar(255), @Password varchar(255))
 	AS
+	BEGIN TRY
+		IF(@Email NOT IN (SELECT Email FROM Users) OR @Password NOT IN (SELECT PasswordHash FROM Users))
+				RAISERROR('Invalid subject id.', 11, 1)
+
 		SELECT [UserID] AS 'User ID',
 			   [UserRoleID] AS 'Role ID'
 		FROM [dbo].[Users]
 		WHERE [Email] = @Email AND [PasswordHash] = @Password
+	END TRY
+	BEGIN CATCH
+		SELECT
+		ERROR_NUMBER() AS ErrorNumber,
+		ERROR_STATE() AS ErrorState,
+		ERROR_SEVERITY() AS ErrorSeverity,
+		ERROR_PROCEDURE() AS ErrorProcedure,
+		ERROR_LINE() AS ErrorLine,
+		ERROR_MESSAGE() AS ErrorMessage;
+
+		DECLARE @ErrorMessage varchar(MAX) = ERROR_MESSAGE(),
+        @Severity int = ERROR_SEVERITY(),
+        @State smallint = ERROR_STATE()
+ 
+	RAISERROR (@ErrorMessage, @Severity, @State)
+	END CATCH
 GO
