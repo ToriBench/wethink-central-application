@@ -83,10 +83,16 @@ GO
 
 CREATE TABLE [dbo].[Faculties](
 	[FacultyID] [int] IDENTITY(1,1) NOT NULL,
+	[InstitutionID] [int] NOT NULL,
 	[Name] [varchar](255) NOT NULL,
 	[Description] [varchar](255) NULL,
 	CONSTRAINT [PK_Faculties] PRIMARY KEY CLUSTERED (
 		FacultyID ASC
+	),
+	CONSTRAINT [FK_FacultiesInstitution]
+		FOREIGN KEY (InstitutionID) REFERENCES Institutions(InstitutionID) ON DELETE CASCADE,
+	UNIQUE (
+		[InstitutionID],[Name]
 	)
 )
 GO
@@ -117,11 +123,9 @@ CONSTRAINT [PK_Courses] PRIMARY KEY CLUSTERED (
 	CourseID ASC
 ),
 CONSTRAINT [FK_CoursesQualification]
-	FOREIGN KEY ([QualificationID]) REFERENCES [Qualifications](QualificationID) ON DELETE SET NULL,
+	FOREIGN KEY ([QualificationID]) REFERENCES [Qualifications](QualificationID) ON DELETE CASCADE,
 CONSTRAINT [FK_CoursesFaculty]
-	FOREIGN KEY ([FacultyID]) REFERENCES [Faculties](FacultyID) ON DELETE SET NULL,
-CONSTRAINT [FK_CoursesInstitution]
-	FOREIGN KEY ([InstitutionID]) REFERENCES [Institutions](InstitutionID) ON DELETE CASCADE
+	FOREIGN KEY ([FacultyID]) REFERENCES [Faculties](FacultyID) ON DELETE CASCADE,
 )
 GO
 --------------------------------------------------------------------
@@ -132,6 +136,9 @@ CREATE TABLE [dbo].[Subjects](
 	[Name] [varchar](255) NOT NULL,
 CONSTRAINT [PK_Subjects] PRIMARY KEY CLUSTERED (
 	SubjectID ASC
+),
+UNIQUE (
+	[Code],[Name]
 ))
 GO
 
@@ -148,7 +155,10 @@ CONSTRAINT PK_Requirements PRIMARY KEY CLUSTERED
 CONSTRAINT [FK_RequirementsSubject]
 	FOREIGN KEY ([SubjectID]) REFERENCES [Subjects](SubjectID) ON DELETE CASCADE,
 CONSTRAINT [FK_RequirementsCourses]
-	FOREIGN KEY ([CourseID]) REFERENCES [Courses](CourseID) ON DELETE CASCADE
+	FOREIGN KEY ([CourseID]) REFERENCES [Courses](CourseID) ON DELETE CASCADE,
+UNIQUE (
+	[CourseID],[SubjectID]
+)
 )
 GO
 
