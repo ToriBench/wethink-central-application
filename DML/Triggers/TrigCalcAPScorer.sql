@@ -3,8 +3,8 @@ ON Results
 AFTER insert, delete, update
 AS 
     BEGIN 
-           Update Students
-		   SET APScorer = dbo.udfCalculateAPScore(StudentID)
+           Update [dbo].[Students]
+		   SET [ApScore] = dbo.udfCalculateAPScore(StudentID)
 
 		   if @@Error <> 0
            begin
