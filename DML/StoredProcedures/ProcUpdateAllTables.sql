@@ -80,11 +80,9 @@ GO
 
 CREATE PROCEDURE uspUpdateStudent
 @StudentID int,
-@UserID int,
-@FirstName varchar(255),
-@LastName varchar(255),
-@AddressID int,
-@ApScore int
+@FirstName varchar(255) = NULL,
+@LastName varchar(255) = NULL,
+@AddressID int = NULL
 
 AS
 BEGIN
@@ -92,13 +90,12 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Students]
-		SET [UserID] = @UserID,
-			[AddressID] = @AddressID,
-			[FirstName] = @FirstName,
-			[LastName] = @LastName,
-			[ApScore] = @ApScore
+		SET 
+			[AddressID] = isNull(@AddressID, [AddressID]),
+			[FirstName] = isNull(@FirstName, [FirstName]),
+			[LastName] = isNull(@LastName, [LastName])
 		WHERE [StudentID] = @StudentID
-
+		
 		IF @@Error <> 0
 		BEGIN
 			ROLLBACK TRANSACTION
