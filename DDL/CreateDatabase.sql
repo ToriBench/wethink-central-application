@@ -69,7 +69,7 @@ CREATE TABLE [dbo].[Institutions](
 	[InstitutionID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](255) NOT NULL,
 	[AddressID] int NULL,
-	[Public] bit NULL,
+	[Public] bit NOT NULL,
 	[ApplicationLink] [varchar](255) NULL,
 	CONSTRAINT [PK_Institutions] PRIMARY KEY CLUSTERED (
 		InstitutionID ASC
@@ -108,7 +108,7 @@ CREATE TABLE [dbo].[Courses](
 	[InstitutionID] [int] NOT NULL,
 	[QualificationID] [int] NULL,
 	[FacultyID] [int] NULL,
-	[FullTime] [bit] NULL,
+	[FullTime] [bit] NOT NULL,
 	[MonthDuration] [int] NULL,
 	[Name] [varchar](255) NOT NULL,
 	[Description] [varchar](255) NULL,
