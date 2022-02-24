@@ -15,31 +15,42 @@ GO
 CREATE PROCEDURE AddUser
 @UserId int,
 @Email varchar(255),
-@FirstName varchar(255),
-@LastName varchar(255),
 @PasswordHash varchar(255),
 @UserRoleId int
 
 AS
 BEGIN
 	   INSERT INTO [dbo].[Users]
-              (Email, FirstName, LastName, PasswordHash, UserRoleID)
+              ([Email], 
+			   [PasswordHash], 
+			   [UserRoleID])
        VALUES
-              (@Email, @FirstName, @LastName, @PasswordHash, @UserRoleID)
+              (@Email, @PasswordHash, @UserRoleID)
 END
 GO
 
 /* STUDENTS TABLE*/
 CREATE PROCEDURE AddStudent
 @UserID int,
-@AddressID int
+@FirstName varchar(255),
+@LastName varchar(255),
+@AddressID int,
+@ApScore int = NULL
 
 AS
 BEGIN
 	   INSERT INTO [dbo].[Students]
-              (UserID, AddressID)
+              ([UserID], 
+			   [FirstName], 
+			   [LastName], 
+			   [AddressID])
        VALUES
-              (@UserID, @AddressID)
+              (@UserID, @FirstName, @LastName, @AddressID)
+	   IF NOT @ApScore IS NULL
+			  INSERT INTO [dbo].[Students]
+					(ApScore)
+			  VALUES 
+			        (@ApScore)
 END
 GO
 
@@ -52,7 +63,7 @@ CREATE PROCEDURE AddResult
 AS
 BEGIN
 	   INSERT INTO [dbo].[Results]
-              (StudentID, SubjectID, Mark)
+              ([StudentID], [SubjectID], [Mark])
        VALUES
               (@StudentID, @SubjectID, @Mark)
 END
@@ -66,7 +77,7 @@ CREATE PROCEDURE AddSubject
 AS
 BEGIN
 	   INSERT INTO [dbo].[Subjects]
-              (Code, Name)
+              ([Code], [Name])
        VALUES
               (@Code, @Name)
 END
@@ -81,7 +92,7 @@ CREATE PROCEDURE AddInstitution
 AS
 BEGIN
 	   INSERT INTO [dbo].[Institutions]
-              (Name, AddressID, ApplicationLink)
+              ([Name], [AddressID], [ApplicationLink])
        VALUES
               (@Name, @AddressID, @ApplicationLink)
 END
@@ -95,29 +106,31 @@ CREATE PROCEDURE AddFaculty
 AS
 BEGIN
 	   INSERT INTO [dbo].[Faculties]
-              (Name, Description)
+              ([Name], [Description])
        VALUES
               (@Name, @Description)
 END
 GO
 
-/* QUALIFICATIONS TABLE*/
-CREATE PROCEDURE AddQualification
+/* COURSES TABLE*/
+CREATE PROCEDURE AddCourse
 @InstitutionID int,
-@FacultyID int, 
+@QualificationID int, 
+@FacultyID int,
 @MonthDuration int,
 @Name varchar(255),
 @Description varchar(255),
-@APScore int
+@ApScore int
 AS
 BEGIN
-	   INSERT INTO [dbo].[Qualifications]
-              ( InstitutionID, 
-				FacultyID,
-				MonthDuration, 
-				Name, 
-				Description, 
-				AP_Score )
+	   INSERT INTO [dbo].[Courses]
+              ( [InstitutionID], 
+			    [QualificationID],
+				[FacultyID],
+				[MonthDuration], 
+				[Name], 
+				[Description], 
+				[ApScore] )
        VALUES
               ( @InstitutionID, 
 				@FacultyID,
@@ -128,20 +141,35 @@ BEGIN
 END
 GO
 
+/* QUALIFICATIONS TABLE*/
+CREATE PROCEDURE AddQualification
+@Name varchar(255),
+@NQFLevel int
+AS
+BEGIN
+	   INSERT INTO [dbo].[Qualifications]
+              ( [Name], 
+				[NQFLevel])
+       VALUES
+              (	@Name,
+				@NQFLevel)
+END
+GO
+
 /* REQUIREMENTS TABLE*/
 CREATE PROCEDURE AddRequirement
-@QualificationID int,
+@CourseID int,
 @SubjectID int, 
 @MinimumMark int
 AS
 BEGIN
 	   INSERT INTO [dbo].[Requirements]
-              ( QualificationID,
-				SubjectID,
-				MinimumMark
+              (	[CourseID],
+				[SubjectID],
+				[MinimumMark]
 			   )
        VALUES
-              ( @QualificationID,
+              ( @CourseID,
 				@SubjectID,
 				@MinimumMark
 			   )
@@ -151,23 +179,23 @@ GO
 /* ADDRESSES TABLE*/
 CREATE PROCEDURE AddAddress
 @City varchar(255),
-@State varchar(255),
-@Zip int,
+@Province varchar(255),
+@PostalCode int,
 @Country varchar(255),
 @StreetAddress varchar(255)
 AS
 BEGIN
 	   INSERT INTO [dbo].[Addresses]
               ( [City],
-				[State],
-				[Zip],
+				[Province],
+				[PostalCode],
 				[Country],
 				[StreetAddress]
 			   )
        VALUES
               ( @City,
-				@State,
-				@Zip,
+				@Province,
+				@PostalCode,
 				@Country,
 				@StreetAddress
 			   )
