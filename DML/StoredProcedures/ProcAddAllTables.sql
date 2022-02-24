@@ -99,7 +99,7 @@ END
 GO
 
 /* FACULTIES TABLE*/
-CREATE PROCEDURE AddFaculty
+CREATE PROCEDURE uspAddFaculty
 @InstitutionID int, 
 @Name varchar(255),
 @Description varchar(255)
@@ -114,7 +114,7 @@ END
 GO
 
 /* COURSES TABLE*/
-CREATE PROCEDURE AddCourse
+CREATE PROCEDURE uspAddCourse
 @QualificationID int, 
 @FacultyID int,
 @MonthDuration int,
