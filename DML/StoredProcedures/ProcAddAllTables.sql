@@ -86,15 +86,16 @@ GO
 /* INSTITUTION TABLE*/
 CREATE PROCEDURE uspAddInstitution
 @Name varchar(255),
+@Public bit,
 @AddressID int,
 @ApplicationLink varchar(255)
 
 AS
 BEGIN
 	INSERT INTO [dbo].[Institutions]
-		([Name], [AddressID], [ApplicationLink])
+		([Name], [AddressID], [Public], [ApplicationLink])
 	VALUES
-		(@Name, @AddressID, @ApplicationLink)
+		(@Name, @AddressID, @Public, @ApplicationLink)
 END
 GO
 
@@ -118,6 +119,7 @@ CREATE PROCEDURE uspAddCourse
 @QualificationID int, 
 @FacultyID int,
 @MonthDuration int,
+@FullTime bit,
 @Name varchar(255),
 @Description varchar(255),
 @ApScore int
@@ -128,12 +130,14 @@ BEGIN
 		[FacultyID],
 		[MonthDuration], 
 		[Name], 
+		[FullTime],
 		[Description], 
 		[ApScore] )
 	VALUES
 		( @FacultyID,
 		@MonthDuration, 
 		@Name, 
+		@FullTime,
 		@Description, 
 		@APScore )
 END
