@@ -1,28 +1,31 @@
 USE WeThinkDB
 GO
-
-ALTER PROCEDURE [dbo].[uspStudentEligible] (
+CREATE OR ALTER PROCEDURE [dbo].[uspStudentEligible] (
 	@StudentID int
 )
 AS
 	SELECT DISTINCT
-		Inst.Institution_Name AS 'Institution',
-		Inst.Faculty_Name AS 'Faculty',
-		Inst.Course_Name AS 'Course'
+		vInstitutionsWithCourses.Institution_Name AS 'Institution',
+		vInstitutionsWithCourses.Faculty_Name AS 'Faculty',
+		vInstitutionsWithCourses.Course_Name AS 'Course'
 	FROM
-		vInstitutionsWithCourses AS Inst,
-		vStudentsWithResults AS Res,
-		vCoursesWithRequirements AS Req,
-		vCoursesWithNoRequirements AS noReq
-	WHERE
-		((Res.StudentID = @StudentID 
-		AND Inst.CourseID = Req.CourseID
-		AND Res.SubjectID = Req.SubjectID
-		AND Req.MinimumMark <= Res.Mark))
+	vInstitutionsWithCourses,
+	Requirements
+	INNER JOIN
+	Subjects ON Subjects.SubjectID= Requirements.SubjectID,
+	Students
+	INNER JOIN 
+	Results ON Students.StudentID = Results.StudentID
 
-		OR
-    
-		(Inst.CourseID = noReq.CourseID)
+	WHERE
+	Students.ApScore>= vInstitutionsWithCourses.ApScore
+	AND
+	(Results.StudentID= @StudentID
+	AND vInstitutionsWithCourses.CourseID= Requirements.CourseID
+	AND Results.SubjectID= Requirements.SubjectID
+	AND Requirements.MinimumMark<= Results.Mark)
+	OR vInstitutionsWithCourses.CourseID NOT IN 
+	(SELECT Requirements.CourseID FROM Requirements)
 		
 	ORDER BY
 		'Institution'
