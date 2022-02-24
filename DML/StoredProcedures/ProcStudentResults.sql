@@ -5,7 +5,8 @@ GO
 -- Gets a student's results 
 CREATE PROCEDURE uspStudentResults( @StudentID int )
 AS
-	SELECT s.[Code], s.[Name], r.[Mark] FROM [dbo].[Results] as r
-	INNER JOIN [dbo].[Subjects] as s ON r.[SubjectID] = s.[SubjectID]
-	WHERE r.[StudentID] = @StudentID
+	SELECT Sub.[Code], Sub.[Name], Res.[Mark] FROM [dbo].[Results] as Res
+	INNER JOIN [dbo].[Subjects] as Sub 
+		ON Res.[SubjectID] = Sub.[SubjectID]
+	WHERE Res.[StudentID] = @StudentID
 GO

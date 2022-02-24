@@ -13,7 +13,7 @@ GO
 
 /* USERS TABLE*/
 CREATE PROCEDURE uspDeleteUser
-@UserId int
+@UserID int
 AS
 BEGIN
 	   DELETE FROM [dbo].[Users]

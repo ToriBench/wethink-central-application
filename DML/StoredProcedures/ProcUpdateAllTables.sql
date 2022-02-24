@@ -3,7 +3,7 @@ USE WeThinkDB
 GO
 
 CREATE PROCEDURE uspUpdateUserRole
-@UserRoleId int,
+@UserRoleID int,
 @UserRole varchar(255)
 
 AS
@@ -13,7 +13,7 @@ BEGIN
 
 	UPDATE [dbo].[UserRoles]
 	SET [UserRole] = @UserRole
-	WHERE [UserRoleID] = @UserRoleId
+	WHERE [UserRoleID] = @UserRoleID
 
 	IF @@Error <> 0
 	BEGIN
@@ -26,12 +26,12 @@ GO
 
 /* USERS TABLE*/
 CREATE PROCEDURE uspUpdateUser
-@UserId int,
+@UserID int,
 @Email varchar(255),
 @FirstName varchar(255),
 @LastName varchar(255),
 @PasswordHash varchar(255),
-@UserRoleId int
+@UserRoleID int
 
 AS
 BEGIN
@@ -41,8 +41,8 @@ BEGIN
 		UPDATE [dbo].[Users]
 		SET [Email] = @Email,
 			[PasswordHash] = @PasswordHash,
-			[UserRoleID] = @UserRoleId
-		WHERE [UserID] = @UserId
+			[UserRoleID] = @UserRoleID
+		WHERE [UserID] = @UserID
 
 		IF @@Error <> 0
 		BEGIN
@@ -55,7 +55,7 @@ GO
 
 /* SUBJECTS TABLE*/
 CREATE PROCEDURE uspUpdateSubject
-@SubjectId int,
+@SubjectID int,
 @Code varchar(255),
 @Name varchar(255)
 
@@ -67,7 +67,7 @@ BEGIN
 		UPDATE [dbo].[Subjects]
 		SET [Code] = @Code,
 			[Name] = @Name
-		WHERE SubjectID = @SubjectId
+		WHERE SubjectID = @SubjectID
 
 		IF @@Error <> 0
 		BEGIN
@@ -81,9 +81,9 @@ GO
 /* STUDENTS TABLE*/
 
 CREATE PROCEDURE uspUpdateStudent
-@StudentId int,
-@UserId int,
-@AddressId int
+@StudentID int,
+@UserID int,
+@AddressID int
 
 AS
 BEGIN
@@ -91,9 +91,9 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Students]
-		SET [UserID] = @UserId,
-			[AddressID] = @AddressId
-		WHERE [StudentID] = @StudentId
+		SET [UserID] = @UserID,
+			[AddressID] = @AddressID
+		WHERE [StudentID] = @StudentID
 
 		IF @@Error <> 0
 		BEGIN
@@ -107,8 +107,8 @@ GO
 /* RESULTS TABLE*/
 
 CREATE PROCEDURE uspUpdateResult
-@StudentId int,
-@SubjectId int,
+@StudentID int,
+@SubjectID int,
 @Mark int
 
 AS
@@ -118,7 +118,7 @@ BEGIN
 
 		UPDATE [dbo].[Results]
 		SET [Mark] = @Mark
-		WHERE [StudentID] = @StudentId AND [SubjectID] = @SubjectId
+		WHERE [StudentID] = @StudentID AND [SubjectID] = @SubjectID
 
 		IF @@Error <> 0
 		BEGIN
@@ -132,8 +132,8 @@ GO
 /* REQUIREMENTS TABLE*/
 
 CREATE PROCEDURE uspUpdateRequirement
-@CourseId int,
-@SubjectId int,
+@CourseID int,
+@SubjectID int,
 @MinimumMark int
 
 AS
@@ -143,7 +143,7 @@ BEGIN
 
 		UPDATE [dbo].[Requirements]
 		SET [MinimumMark] = @MinimumMark
-		WHERE [CourseId] = @CourseId AND [SubjectID] = @SubjectId
+		WHERE [CourseId] = @CourseID AND [SubjectID] = @SubjectID
 
 		IF @@Error <> 0
 		BEGIN
@@ -156,10 +156,10 @@ GO
 
 /* Courses TABLE */
 CREATE PROCEDURE uspUpdateCourse
-@CourseId int,
-@QualificationId int,
-@InstitutionId int,
-@FacultyId int,
+@CourseID int,
+@QualificationID int,
+@InstitutionID int,
+@FacultyID int,
 @MonthDuration int,
 @Name varchar(255),
 @Descr varchar(255),
@@ -171,14 +171,14 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Courses]
-		SET [QualificationID] = @QualificationId,
-			[InstitutionID] = @InstitutionId,
-			[FacultyID] = @FacultyId,
+		SET [QualificationID] = @QualificationID,
+			[InstitutionID] = @InstitutionID,
+			[FacultyID] = @FacultyID,
 			[MonthDuration] = @MonthDuration,
 			[Name] = @Name,
 			[Description] = @Descr,
 			[APScore] = @APS
-		WHERE [CourseID] = @CourseId 
+		WHERE [CourseID] = @CourseID 
 
 		IF @@Error <> 0
 			BEGIN
@@ -191,7 +191,7 @@ GO
 
 /* Qualification TABLE */
 CREATE PROCEDURE uspUpdateQualification
-@QualificationId int,
+@QualificationID int,
 @NQFLevel int,
 @Name varchar(255)
 
@@ -203,7 +203,7 @@ BEGIN
 	UPDATE [dbo].[Qualifications]
 	SET  [NQFLevel] = @NQFLevel,
 		 [Name] = @Name
-	WHERE [QualificationID] = @QualificationId 
+	WHERE [QualificationID] = @QualificationID 
 
 	IF @@Error <> 0
 	BEGIN
@@ -216,9 +216,9 @@ GO
 
 /* INSTITUTIONS TABLE */ 
 CREATE PROCEDURE uspUpdateInstitution
-@InstitutionId int,
+@InstitutionID int,
 @Name varchar(255),
-@AddressId int,
+@AddressID int,
 @ApplicationLink varchar(255)
 
 AS
@@ -227,9 +227,9 @@ BEGIN
 	BEGIN TRANSACTION
 		UPDATE [dbo].[Institutions]
 		SET [Name] = @Name,
-			[AddressID] = @AddressId,
+			[AddressID] = @AddressID,
 			[ApplicationLink] = @ApplicationLink
-		WHERE [InstitutionID] = @InstitutionId 
+		WHERE [InstitutionID] = @InstitutionID 
 
 		IF @@Error <> 0
 		BEGIN
@@ -242,7 +242,7 @@ GO
 
 /* FACULITIES TABLE*/
 CREATE PROCEDURE uspUpdateFaculty
-@FacultyId int,
+@FacultyID int,
 @Name varchar(255),
 @Descr varchar(255)
 
@@ -254,7 +254,7 @@ BEGIN
 		UPDATE [dbo].[Faculties]
 		SET [Name] = @Name,
 			[Description] = @Descr
-		WHERE [FacultyID] = @FacultyId 
+		WHERE [FacultyID] = @FacultyID 
 
 		IF @@Error <> 0
 		BEGIN

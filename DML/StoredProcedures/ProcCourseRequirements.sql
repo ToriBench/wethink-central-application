@@ -5,8 +5,9 @@ GO
 CREATE PROCEDURE uspCourseRequirements( @CourseID int)
 -- Gets the subject requirements of a given course 
 AS
-	SELECT s.Code, s.Name, r.MinimumMark 
-	FROM [dbo].[Requirements] as r 
-	INNER JOIN [Subjects] as s ON r.[SubjectID] = s.[SubjectID] 
-	WHERE r.[CourseID] = @CourseID
+	SELECT Sub.[Code], Sub.[Name], Req.[MinimumMark] 
+	FROM [dbo].[Requirements] as Req
+	INNER JOIN [Subjects] as Sub 
+		ON Req.[SubjectID] = Sub.[SubjectID] 
+	WHERE Req.[CourseID] = @CourseID
 GO
