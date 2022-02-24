@@ -4,11 +4,11 @@ CREATE PROCEDURE AddUserRole
 
 AS
 BEGIN
-	   INSERT INTO [dbo].[UserRoles]
-              (UserRole)
-       VALUES
-              (@UserRole)
-END
+	INSERT INTO [dbo].[UserRoles]
+		([UserRole])
+	VALUES
+		(@UserRole)
+	END
 GO
 
 /* USERS TABLE*/
@@ -20,12 +20,12 @@ CREATE PROCEDURE AddUser
 
 AS
 BEGIN
-	   INSERT INTO [dbo].[Users]
-              ([Email], 
-			   [PasswordHash], 
-			   [UserRoleID])
-       VALUES
-              (@Email, @PasswordHash, @UserRoleID)
+	INSERT INTO [dbo].[Users]
+		([Email], 
+		[PasswordHash], 
+		[UserRoleID])
+	VALUES
+		(@Email, @PasswordHash, @UserRoleID)
 END
 GO
 
@@ -39,18 +39,18 @@ CREATE PROCEDURE AddStudent
 
 AS
 BEGIN
-	   INSERT INTO [dbo].[Students]
-              ([UserID], 
-			   [FirstName], 
-			   [LastName], 
-			   [AddressID])
-       VALUES
-              (@UserID, @FirstName, @LastName, @AddressID)
-	   IF NOT @ApScore IS NULL
-			  INSERT INTO [dbo].[Students]
-					(ApScore)
-			  VALUES 
-			        (@ApScore)
+	INSERT INTO [dbo].[Students]
+		([UserID], 
+		[FirstName], 
+		[LastName], 
+		[AddressID])
+	VALUES
+		(@UserID, @FirstName, @LastName, @AddressID)
+	IF NOT @ApScore IS NULL
+		INSERT INTO [dbo].[Students]
+		(ApScore)
+		VALUES 
+		(@ApScore)
 END
 GO
 
@@ -62,10 +62,10 @@ CREATE PROCEDURE AddResult
 
 AS
 BEGIN
-	   INSERT INTO [dbo].[Results]
-              ([StudentID], [SubjectID], [Mark])
-       VALUES
-              (@StudentID, @SubjectID, @Mark)
+	INSERT INTO [dbo].[Results]
+		([StudentID], [SubjectID], [Mark])
+	VALUES
+		(@StudentID, @SubjectID, @Mark)
 END
 GO
 
@@ -76,10 +76,10 @@ CREATE PROCEDURE AddSubject
 
 AS
 BEGIN
-	   INSERT INTO [dbo].[Subjects]
-              ([Code], [Name])
-       VALUES
-              (@Code, @Name)
+	INSERT INTO [dbo].[Subjects]
+		([Code], [Name])
+	VALUES
+		(@Code, @Name)
 END
 GO
 
@@ -91,10 +91,10 @@ CREATE PROCEDURE AddInstitution
 
 AS
 BEGIN
-	   INSERT INTO [dbo].[Institutions]
-              ([Name], [AddressID], [ApplicationLink])
-       VALUES
-              (@Name, @AddressID, @ApplicationLink)
+	INSERT INTO [dbo].[Institutions]
+		([Name], [AddressID], [ApplicationLink])
+	VALUES
+		(@Name, @AddressID, @ApplicationLink)
 END
 GO
 
@@ -105,10 +105,10 @@ CREATE PROCEDURE AddFaculty
 
 AS
 BEGIN
-	   INSERT INTO [dbo].[Faculties]
-              ([Name], [Description])
-       VALUES
-              (@Name, @Description)
+	INSERT INTO [dbo].[Faculties]
+		([Name], [Description])
+	VALUES
+		(@Name, @Description)
 END
 GO
 
@@ -123,21 +123,21 @@ CREATE PROCEDURE AddCourse
 @ApScore int
 AS
 BEGIN
-	   INSERT INTO [dbo].[Courses]
-              ( [InstitutionID], 
-			    [QualificationID],
-				[FacultyID],
-				[MonthDuration], 
-				[Name], 
-				[Description], 
-				[ApScore] )
-       VALUES
-              ( @InstitutionID, 
-				@FacultyID,
-				@MonthDuration, 
-				@Name, 
-				@Description, 
-				@APScore )
+	INSERT INTO [dbo].[Courses]
+		( [InstitutionID], 
+		[QualificationID],
+		[FacultyID],
+		[MonthDuration], 
+		[Name], 
+		[Description], 
+		[ApScore] )
+	VALUES
+		( @InstitutionID, 
+		@FacultyID,
+		@MonthDuration, 
+		@Name, 
+		@Description, 
+		@APScore )
 END
 GO
 
@@ -147,12 +147,12 @@ CREATE PROCEDURE AddQualification
 @NQFLevel int
 AS
 BEGIN
-	   INSERT INTO [dbo].[Qualifications]
-              ( [Name], 
-				[NQFLevel])
-       VALUES
-              (	@Name,
-				@NQFLevel)
+	INSERT INTO [dbo].[Qualifications]
+		([Name], 
+		[NQFLevel])
+	VALUES
+		(@Name,
+		@NQFLevel)
 END
 GO
 
@@ -163,16 +163,14 @@ CREATE PROCEDURE AddRequirement
 @MinimumMark int
 AS
 BEGIN
-	   INSERT INTO [dbo].[Requirements]
-              (	[CourseID],
-				[SubjectID],
-				[MinimumMark]
-			   )
-       VALUES
-              ( @CourseID,
-				@SubjectID,
-				@MinimumMark
-			   )
+	INSERT INTO [dbo].[Requirements]
+		([CourseID],
+		[SubjectID],
+		[MinimumMark])
+	VALUES
+		(@CourseID,
+		@SubjectID,
+		@MinimumMark)
 END
 GO
 
@@ -185,19 +183,17 @@ CREATE PROCEDURE AddAddress
 @StreetAddress varchar(255)
 AS
 BEGIN
-	   INSERT INTO [dbo].[Addresses]
-              ( [City],
-				[Province],
-				[PostalCode],
-				[Country],
-				[StreetAddress]
-			   )
-       VALUES
-              ( @City,
-				@Province,
-				@PostalCode,
-				@Country,
-				@StreetAddress
-			   )
+	INSERT INTO [dbo].[Addresses]
+		([City],
+		[Province],
+		[PostalCode],
+		[Country],
+		[StreetAddress])
+	VALUES
+		(@City,
+		@Province,
+		@PostalCode,
+		@Country,
+		@StreetAddress)
 END
 GO
