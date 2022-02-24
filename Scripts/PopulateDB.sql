@@ -1,8 +1,6 @@
 USE WeThinkDB
 GO
 
-TRUNCATE TABLE [dbo].[Addresses]
-GO
 
 INSERT INTO [dbo].[Addresses] (StreetAddress, City, Province, PostalCode, Country)
 	VALUES ('897 Gemsbok St','Pietersburg','Limpopo','0760','South Africa'),
@@ -33,9 +31,6 @@ INSERT INTO [dbo].[Addresses] (StreetAddress, City, Province, PostalCode, Countr
 ('256 South St','Mabopane','Gauteng','0219','South Africa')
 GO
 
-TRUNCATE TABLE [dbo].[Faculties]
-GO
-
 INSERT INTO [dbo].[Faculties] ([Name], [Description])
 	VALUES ('Political Science','Study of politics'),
 ('Philosophy','Study of philosophy'),
@@ -52,9 +47,6 @@ INSERT INTO [dbo].[Faculties] ([Name], [Description])
 ('Arts','Study of arts')
 GO
 
-TRUNCATE TABLE [dbo].[Institutions]
-GO
-
 INSERT INTO [dbo].[Institutions] ([Name],ApplicationLink,AddressID)
 	VALUES ('University of South Africa','http://www.usaf.ac.za/','7'),
 ('University of the Witwatersrand Johannesburg','http://www.wits.ac.za/','8'),
@@ -68,18 +60,12 @@ INSERT INTO [dbo].[Institutions] ([Name],ApplicationLink,AddressID)
 ('South African Defence Intelligence College','https://m.facebook.com/pages/SA-Defence-Intelligence-College/303792933062970','16')
 GO
 
-TRUNCATE TABLE [dbo].[Qualifications]
-GO
-
 INSERT INTO [dbo].[Qualifications]([Name], NQFLevel)
 	VALUES ('Higher Certificate', 5),
 		('National Diploma', 6),
 		('Bachelor''s Degree', 7),
 		('Honours Degree', 8),
 		('Master''s Degree', 9)
-GO
-
-TRUNCATE TABLE [dbo].[Courses]
 GO
 
 INSERT INTO [dbo].[Courses](InstitutionID,FacultyID,[Name],MonthDuration,[Description],ApScore, QualificationID)
@@ -120,16 +106,11 @@ INSERT INTO [dbo].[Courses](InstitutionID,FacultyID,[Name],MonthDuration,[Descri
 		(10,10,'Biochemistry and Cell Biology',36,'Biochemistry studies',30,5)
 GO
 
-TRUNCATE TABLE [dbo].[UserRoles]
-GO
-
 INSERT INTO [dbo].[UserRoles] (UserRole)
 	VALUES ('Administrator'),
 		('Student')
 GO
 
-TRUNCATE TABLE [dbo].[Users]
-GO
 
 INSERT INTO [dbo].[Users] (Email,[PasswordHash],UserRoleID)
 	VALUES ('chuckie@mintdex.com','fvfdv511vsdv168sv515',2),
@@ -154,9 +135,6 @@ INSERT INTO [dbo].[Users] (Email,[PasswordHash],UserRoleID)
 	('ymanny@hiber.com','xcv621xz6v12x612xc3v1',1)
 GO
 
-TRUNCATE TABLE [dbo].[Students]
-GO
-
 INSERT INTO [dbo].[Students](UserID,AddressID, FirstName, LastName)
 	VALUES(1,1,'Chuckies','Pride'),
 		(2,2,'Lance','Meadow'),
@@ -176,9 +154,6 @@ INSERT INTO [dbo].[Students](UserID,AddressID, FirstName, LastName)
 		(16,22, 'Zachary', 'Henry'),
 		(17,19, 'Judy', 'Moncada'),
 		(18,20,'Nicole','Lilly')
-GO
-
-TRUNCATE TABLE [dbo].[Subjects]
 GO
 
 INSERT INTO [dbo].[Subjects]([Name],Code)
@@ -233,8 +208,6 @@ INSERT INTO [dbo].[Subjects]([Name],Code)
 ('Tourism','20351084')
 GO
 
-TRUNCATE TABLE [dbo].[Requirements]
-GO
 
 INSERT INTO [dbo].[Requirements] (CourseID,SubjectID,MinimumMark)
 	VALUES (5,29,57),
@@ -259,8 +232,6 @@ INSERT INTO [dbo].[Requirements] (CourseID,SubjectID,MinimumMark)
 (6,16,56)
 GO
 
-TRUNCATE TABLE [dbo].[Results]
-GO
 
 INSERT INTO [dbo].[Results] (StudentID,SubjectID,Mark)
 	VALUES (1,30,46),
@@ -407,9 +378,6 @@ INSERT INTO [dbo].[Results] (StudentID,SubjectID,Mark)
 		(18, 22,52),
 		(18, 48,70),
 		(18, 12,40)
-GO
-
-TRUNCATE TABLE [dbo].[StudentSavedCourses]
 GO
 
 INSERT INTO [dbo].[StudentSavedCourses](StudentID, CourseID)
