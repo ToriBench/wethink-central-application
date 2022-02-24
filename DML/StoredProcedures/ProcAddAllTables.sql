@@ -13,7 +13,6 @@ GO
 
 /* USERS TABLE*/
 CREATE PROCEDURE uspAddUser
-@UserId int,
 @Email varchar(255),
 @PasswordHash varchar(255),
 @UserRoleId int
@@ -86,16 +85,15 @@ GO
 /* INSTITUTION TABLE*/
 CREATE PROCEDURE uspAddInstitution
 @Name varchar(255),
-@Public bit,
 @AddressID int,
 @ApplicationLink varchar(255)
 
 AS
 BEGIN
 	INSERT INTO [dbo].[Institutions]
-		([Name], [AddressID], [Public], [ApplicationLink])
+		([Name], [AddressID], [ApplicationLink])
 	VALUES
-		(@Name, @AddressID, @Public, @ApplicationLink)
+		(@Name, @AddressID, @ApplicationLink)
 END
 GO
 
@@ -119,25 +117,22 @@ CREATE PROCEDURE uspAddCourse
 @QualificationID int, 
 @FacultyID int,
 @MonthDuration int,
-@FullTime bit,
 @Name varchar(255),
 @Description varchar(255),
 @ApScore int
 AS
 BEGIN
 	INSERT INTO [dbo].[Courses]
-		( [QualificationID],
+		(
 		[FacultyID],
 		[MonthDuration], 
 		[Name], 
-		[FullTime],
 		[Description], 
 		[ApScore] )
 	VALUES
 		( @FacultyID,
 		@MonthDuration, 
 		@Name, 
-		@FullTime,
 		@Description, 
 		@APScore )
 END
