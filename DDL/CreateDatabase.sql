@@ -130,7 +130,7 @@ CONSTRAINT [FK_CoursesQualification]
 CONSTRAINT [FK_CoursesFaculty]
 	FOREIGN KEY ([FacultyID]) REFERENCES [Faculties](FacultyID) ON DELETE CASCADE,
 UNIQUE (
-	[InstitutionID],[QualificationID], [FacultyID], [Name]
+	[QualificationID], [FacultyID], [Name]
 )
 )
 GO

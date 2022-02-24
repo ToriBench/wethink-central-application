@@ -28,8 +28,6 @@ GO
 CREATE PROCEDURE uspUpdateUser
 @UserID int,
 @Email varchar(255),
-@FirstName varchar(255),
-@LastName varchar(255),
 @PasswordHash varchar(255),
 @UserRoleID int
 
@@ -83,7 +81,10 @@ GO
 CREATE PROCEDURE uspUpdateStudent
 @StudentID int,
 @UserID int,
-@AddressID int
+@FirstName varchar(255),
+@LastName varchar(255),
+@AddressID int,
+@ApScore int
 
 AS
 BEGIN
@@ -92,7 +93,10 @@ BEGIN
 
 		UPDATE [dbo].[Students]
 		SET [UserID] = @UserID,
-			[AddressID] = @AddressID
+			[AddressID] = @AddressID,
+			[FirstName] = @FirstName,
+			[LastName] = @LastName,
+			[ApScore] = @ApScore
 		WHERE [StudentID] = @StudentID
 
 		IF @@Error <> 0
