@@ -6,7 +6,7 @@ IF OBJECT_ID('udfCalculateAPScore') IS NOT NULL
     DROP FUNCTION udfCalculateAPScore
 GO
 
-CREATE FUNCTION udfCalculateAPScore(@studentId int)
+CREATE FUNCTION udfCalculateAPScore(@StudentID int)
     RETURNS int
     AS
     BEGIN
@@ -24,8 +24,8 @@ CREATE FUNCTION udfCalculateAPScore(@studentId int)
                     WHEN TopMarks.Mark < 30 THEN 1
                 END) AS APScore
             FROM (SELECT TOP 7 Mark 
-                    FROM Results
-                    WHERE StudentID = @studentId
+                    FROM [dbo].[Results]
+                    WHERE StudentID = @StudentID
                 ) AS TopMarks
         ) AS APScores)
     END

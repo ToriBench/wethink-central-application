@@ -21,9 +21,8 @@ AS
 		AND Req.MinimumMark <= Res.Mark))
 
 		OR
-
+    
 		(Inst.CourseID = noReq.CourseID)
-
 		
 	ORDER BY
 		'Institution'
