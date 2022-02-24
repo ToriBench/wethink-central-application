@@ -120,7 +120,7 @@ CONSTRAINT [PK_Courses] PRIMARY KEY CLUSTERED (
 	CourseID ASC
 ),
 CONSTRAINT [FK_CoursesQualification]
-	FOREIGN KEY ([QualificationID]) REFERENCES [Qualifications](QualificationID) ON DELETE SET NULL,
+	FOREIGN KEY ([QualificationID]) REFERENCES [Qualifications](QualificationID) ON DELETE CASCADE,
 CONSTRAINT [FK_CoursesFaculty]
 	FOREIGN KEY ([FacultyID]) REFERENCES [Faculties](FacultyID) ON DELETE CASCADE,
 )
@@ -154,7 +154,7 @@ CONSTRAINT [FK_RequirementsSubject]
 CONSTRAINT [FK_RequirementsCourses]
 	FOREIGN KEY ([CourseID]) REFERENCES [Courses](CourseID) ON DELETE CASCADE,
 UNIQUE (
-	[CourseID],[Subject]
+	[CourseID],[SubjectID]
 )
 )
 GO
