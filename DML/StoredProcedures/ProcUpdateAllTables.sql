@@ -27,9 +27,9 @@ GO
 /* USERS TABLE*/
 CREATE PROCEDURE uspUpdateUser
 @UserID int,
-@Email varchar(255),
-@PasswordHash varchar(255),
-@UserRoleID int
+@Email varchar(255) = NULL,
+@PasswordHash varchar(255) = NULL,
+@UserRoleID int = NULL
 
 AS
 BEGIN
@@ -37,9 +37,9 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Users]
-		SET [Email] = @Email,
-			[PasswordHash] = @PasswordHash,
-			[UserRoleID] = @UserRoleID
+		SET [Email] = isNull(@Email, [Email]),
+			[PasswordHash] = isNull(@PasswordHash,[PasswordHash]),
+			[UserRoleID] = isNull(@UserRoleID,[UserRoleID])
 		WHERE [UserID] = @UserID
 
 		IF @@Error <> 0
@@ -54,8 +54,8 @@ GO
 /* SUBJECTS TABLE*/
 CREATE PROCEDURE uspUpdateSubject
 @SubjectID int,
-@Code varchar(255),
-@Name varchar(255)
+@Code varchar(255) = NULL,
+@Name varchar(255) = NULL
 
 AS
 BEGIN
@@ -63,8 +63,8 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Subjects]
-		SET [Code] = @Code,
-			[Name] = @Name
+		SET [Code] = isNull(@Code, [Code]),
+			[Name] = isNull(@Name, [Name])
 		WHERE SubjectID = @SubjectID
 
 		IF @@Error <> 0
@@ -158,12 +158,12 @@ GO
 /* Courses TABLE */
 CREATE PROCEDURE uspUpdateCourse
 @CourseId int,
-@QualificationId int,
-@FacultyId int,
-@MonthDuration int,
-@Name varchar(255),
-@Descr varchar(255),
-@APS int
+@QualificationId int = NULL,
+@FacultyId int = NULL,
+@MonthDuration int = NULL,
+@Name varchar(255) = NULL,
+@Description varchar(255) = NULL,
+@ApScore int = NULL
 
 AS
 BEGIN
@@ -171,12 +171,12 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Courses]
-		SET [QualificationID] = @QualificationId,
-			[FacultyID] = @FacultyId,
-			[MonthDuration] = @MonthDuration,
-			[Name] = @Name,
-			[Description] = @Descr,
-			[APScore] = @APS
+		SET [QualificationID] = isNull(@QualificationId, [QualificationID]),
+			[FacultyID] = isNull(@FacultyId, [FacultyID]),
+			[MonthDuration] = isNull(@MonthDuration, [MonthDuration]),
+			[Name] = isNull(@Name, [Name]),
+			[Description] = isNull(@Description,[Description]),
+			[ApScore] = isNull(@ApScore, [ApScore])
 		WHERE [CourseID] = @CourseID 
 
 		IF @@Error <> 0
@@ -191,8 +191,8 @@ GO
 /* Qualification TABLE */
 CREATE PROCEDURE uspUpdateQualification
 @QualificationID int,
-@NQFLevel int,
-@Name varchar(255)
+@NQFLevel int=NULL,
+@Name varchar(255)=NULL 
 
 AS
 BEGIN
@@ -200,8 +200,8 @@ BEGIN
 	BEGIN TRANSACTION
 
 	UPDATE [dbo].[Qualifications]
-	SET  [NQFLevel] = @NQFLevel,
-		 [Name] = @Name
+	SET  [NQFLevel] = isNull(@NQFLevel, [NQFLevel]),
+		 [Name] = isNull(@Name, [NQFLevel])
 	WHERE [QualificationID] = @QualificationID 
 
 	IF @@Error <> 0
@@ -216,18 +216,18 @@ GO
 /* INSTITUTIONS TABLE */ 
 CREATE PROCEDURE uspUpdateInstitution
 @InstitutionID int,
-@Name varchar(255),
-@AddressID int,
-@ApplicationLink varchar(255)
+@Name varchar(255)=NULL,
+@AddressID int=NULL,
+@ApplicationLink varchar(255)=NULL
 
 AS
 BEGIN
 
 	BEGIN TRANSACTION
 		UPDATE [dbo].[Institutions]
-		SET [Name] = @Name,
-			[AddressID] = @AddressID,
-			[ApplicationLink] = @ApplicationLink
+		SET [Name] = isNull(@Name,[Name]),
+			[AddressID] = isNull(@AddressID,[AddressID]),
+			[ApplicationLink] = isNull(@ApplicationLink, [ApplicationLink])
 		WHERE [InstitutionID] = @InstitutionID 
 
 		IF @@Error <> 0
@@ -242,9 +242,9 @@ GO
 /* FACULITIES TABLE*/
 CREATE PROCEDURE uspUpdateFaculty
 @FacultyId int,
-@InstitutionID int,
-@Name varchar(255),
-@Description varchar(255)
+@InstitutionID int = NULL,
+@Name varchar(255) = NULL,
+@Description varchar(255) = NULL
 
 AS
 BEGIN
@@ -252,9 +252,9 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Faculties]
-		SET [InstitutionID]= @InstitutionID,
-			[Name] = @Name,
-			[Description] = @Description
+		SET [InstitutionID]= isNull(@InstitutionID,[InstitutionID]),
+			[Name] = isNull(@Name,[Name]),
+			[Description] = isNull(@Description,[Description])
 		WHERE [FacultyID] = @FacultyID 
 
 		IF @@Error <> 0
@@ -283,12 +283,12 @@ BEGIN
 
 		UPDATE [dbo].[Addresses]
 		SET 
-			[StreetAddress] = @StreetAddress,
-			[City] = @City,
-			[Province] = @Province,
-			[PostalCode]  = @PostalCode,
-			[Country] = @Country
-		WHERE [AddressID] = @AddressID 
+			[StreetAddress] = isNull(@StreetAddress,[StreetAddress]),
+			[City] = isNull(@City, [City]),
+			[Province] = isNull(@Province, [Province]),
+			[PostalCode]  = isNull(@PostalCode,[PostalCode]),
+			[Country] = isNull(@Country,[Country])
+		WHERE [AddressID] =@AddressID 
 
 		IF @@Error <> 0
 		BEGIN
