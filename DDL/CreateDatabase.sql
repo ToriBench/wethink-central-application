@@ -89,7 +89,7 @@ CREATE TABLE [dbo].[Faculties](
 		FacultyID ASC
 	),
 	CONSTRAINT [FK_FacultiesInstitution]
-		FOREIGN KEY (InstitutionID) REFERENCES Addresses(InstitutionID) ON DELETE CASCADE,
+		FOREIGN KEY (InstitutionID) REFERENCES Institutions(InstitutionID) ON DELETE CASCADE,
 	UNIQUE (
 		[InstitutionID],[Name]
 	)
