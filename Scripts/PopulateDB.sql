@@ -1,7 +1,7 @@
 USE WeThinkDB
 GO
 
-INSERT INTO [dbo].[Addresses] (StreetAddress, City, Province, PostalCode, Country)
+INSERT INTO [dbo].[Addresses] ([StreetAddress], [City], [Province], [PostalCode], [Country])
 	VALUES ('897 Gemsbok St','Pietersburg','Limpopo','0760','South Africa'),
 ('496 Wit Rd','Johannesburg','Gauteng','2018','South Africa'),
 ('1666 Robertson Ave','Temba','North West','0499','South Africa'),
@@ -46,7 +46,7 @@ INSERT INTO [dbo].[Faculties] ([Name], [Description])
 ('Arts','Study of arts')
 GO
 
-INSERT INTO [dbo].[Institutions] ([Name],ApplicationLink,AddressID)
+INSERT INTO [dbo].[Institutions] ([Name],[ApplicationLink],[AddressID])
 	VALUES ('University of South Africa','http://www.usaf.ac.za/','7'),
 ('University of the Witwatersrand Johannesburg','http://www.wits.ac.za/','8'),
 ('SACAP (The South African College of Applied Psychology) Pretoria','http://www.sacap.edu.za/','9'),
@@ -59,7 +59,7 @@ INSERT INTO [dbo].[Institutions] ([Name],ApplicationLink,AddressID)
 ('South African Defence Intelligence College','https://m.facebook.com/pages/SA-Defence-Intelligence-College/303792933062970','16')
 GO
 
-INSERT INTO [dbo].[Qualifications]([Name], NQFLevel)
+INSERT INTO [dbo].[Qualifications]([Name], [NQFLevel])
 	VALUES ('Higher Certificate', 5),
 		('National Diploma', 6),
 		('Bachelor''s Degree', 7),
@@ -67,7 +67,7 @@ INSERT INTO [dbo].[Qualifications]([Name], NQFLevel)
 		('Master''s Degree', 9)
 GO
 
-INSERT INTO [dbo].[Courses](InstitutionID,FacultyID,[Name],MonthDuration,[Description],ApScore, QualificationID)
+INSERT INTO [dbo].[Courses]([InstitutionID],[FacultyID],[Name],[MonthDuration],[Description],[ApScore], [QualificationID])
 	VALUES (2,4,'Bachelor of Commerce (Accounting)',36,'Accounting studies',35,3),
 		(3,4,'Bachelor of Commerce (Information Systems)',24,'Information Systems studies',35,3),
 		(10,4,'Bachelor of Commerce (Politics, Philosophy and Economics)',48,'Politics Philosophy and Economics studies',35,3),
@@ -105,12 +105,12 @@ INSERT INTO [dbo].[Courses](InstitutionID,FacultyID,[Name],MonthDuration,[Descri
 		(10,10,'Biochemistry and Cell Biology',36,'Biochemistry studies',30,5)
 GO
 
-INSERT INTO [dbo].[UserRoles] (UserRole)
+INSERT INTO [dbo].[UserRoles] ([UserRole])
 	VALUES ('Administrator'),
 		('Student')
 GO
 
-INSERT INTO [dbo].[Users] (Email,[PasswordHash],UserRoleID)
+INSERT INTO [dbo].[Users] ([Email],[PasswordHash],[UserRoleID])
 	VALUES ('chuckie@mintdex.com','fvfdv511vsdv168sv515',2),
 	('lance@trudo.com','hrthrthgbdfsb61262',2),
 	('mjabu@wowwer.com','dhbshgn631b621b6gn1b',2),
@@ -133,7 +133,7 @@ INSERT INTO [dbo].[Users] (Email,[PasswordHash],UserRoleID)
 	('ymanny@hiber.com','xcv621xz6v12x612xc3v1',1)
 GO
 
-INSERT INTO [dbo].[Students](UserID,AddressID, FirstName, LastName)
+INSERT INTO [dbo].[Students]([UserID],[AddressID], [FirstName], [LastName])
 	VALUES(1,1,'Chuckies','Pride'),
 		(2,2,'Lance','Meadow'),
 		(3,2,'Mfana','Jabu'),
@@ -154,7 +154,7 @@ INSERT INTO [dbo].[Students](UserID,AddressID, FirstName, LastName)
 		(18,20,'Nicole','Lilly')
 GO
 
-INSERT INTO [dbo].[Subjects]([Name],Code)
+INSERT INTO [dbo].[Subjects]([Name],[Code])
 	VALUES ('Afrikaans Home Language','13301024'),
 ('Afrikaans First Additional Language','13311054'),
 ('English Home Language','13301084'),
@@ -206,7 +206,7 @@ INSERT INTO [dbo].[Subjects]([Name],Code)
 ('Tourism','20351084')
 GO
 
-INSERT INTO [dbo].[Requirements] (CourseID,SubjectID,MinimumMark)
+INSERT INTO [dbo].[Requirements] ([CourseID],[SubjectID],[MinimumMark])
 	VALUES (5,29,57),
 (32,17,75),
 (31,11,72),
@@ -229,7 +229,7 @@ INSERT INTO [dbo].[Requirements] (CourseID,SubjectID,MinimumMark)
 (6,16,56)
 GO
 
-INSERT INTO [dbo].[Results] (StudentID,SubjectID,Mark)
+INSERT INTO [dbo].[Results] ([StudentID],[SubjectID],[Mark])
 	VALUES (1,30,46),
 		(1,49,36),
 		(1,18,52),
@@ -376,7 +376,7 @@ INSERT INTO [dbo].[Results] (StudentID,SubjectID,Mark)
 		(18, 12,40)
 GO
 
-INSERT INTO [dbo].[StudentSavedCourses](StudentID, CourseID)
+INSERT INTO [dbo].[StudentSavedCourses]([StudentID], [CourseID])
 	VALUES (1, 12),
 		(9, 2),  
 		(18, 28),
