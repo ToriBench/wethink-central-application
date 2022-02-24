@@ -156,10 +156,16 @@ GO
 
 /* Courses TABLE */
 CREATE PROCEDURE uspUpdateCourse
+<<<<<<< HEAD
 @CourseID int,
 @QualificationID int,
 @InstitutionID int,
 @FacultyID int,
+=======
+@CourseId int,
+@QualificationId int,
+@FacultyId int,
+>>>>>>> main
 @MonthDuration int,
 @Name varchar(255),
 @Descr varchar(255),
@@ -171,9 +177,14 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Courses]
+<<<<<<< HEAD
 		SET [QualificationID] = @QualificationID,
 			[InstitutionID] = @InstitutionID,
 			[FacultyID] = @FacultyID,
+=======
+		SET [QualificationID] = @QualificationId,
+			[FacultyID] = @FacultyId,
+>>>>>>> main
 			[MonthDuration] = @MonthDuration,
 			[Name] = @Name,
 			[Description] = @Descr,
@@ -242,7 +253,12 @@ GO
 
 /* FACULITIES TABLE*/
 CREATE PROCEDURE uspUpdateFaculty
+<<<<<<< HEAD
 @FacultyID int,
+=======
+@FacultyId int,
+@InstitutionID int,
+>>>>>>> main
 @Name varchar(255),
 @Descr varchar(255)
 
@@ -252,7 +268,8 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Faculties]
-		SET [Name] = @Name,
+		SET [InstitutionID]= @InstitutionID,
+			[Name] = @Name,
 			[Description] = @Descr
 		WHERE [FacultyID] = @FacultyID 
 

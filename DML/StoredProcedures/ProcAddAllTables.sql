@@ -99,22 +99,22 @@ END
 GO
 
 /* FACULTIES TABLE*/
-CREATE PROCEDURE uspAddFaculty
+CREATE PROCEDURE AddFaculty
+@InstitutionID int, 
 @Name varchar(255),
 @Description varchar(255)
 
 AS
 BEGIN
 	INSERT INTO [dbo].[Faculties]
-		([Name], [Description])
+		([InstitutionID], [Name], [Description])
 	VALUES
-		(@Name, @Description)
+		(@InstitutionID, @Name, @Description)
 END
 GO
 
 /* COURSES TABLE*/
-CREATE PROCEDURE uspAddCourse
-@InstitutionID int,
+CREATE PROCEDURE AddCourse
 @QualificationID int, 
 @FacultyID int,
 @MonthDuration int,
@@ -124,16 +124,14 @@ CREATE PROCEDURE uspAddCourse
 AS
 BEGIN
 	INSERT INTO [dbo].[Courses]
-		( [InstitutionID], 
-		[QualificationID],
+		( [QualificationID],
 		[FacultyID],
 		[MonthDuration], 
 		[Name], 
 		[Description], 
 		[ApScore] )
 	VALUES
-		( @InstitutionID, 
-		@FacultyID,
+		( @FacultyID,
 		@MonthDuration, 
 		@Name, 
 		@Description, 
