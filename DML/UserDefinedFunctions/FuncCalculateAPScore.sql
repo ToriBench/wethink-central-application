@@ -25,7 +25,7 @@ CREATE FUNCTION udfCalculateAPScore(@StudentID int)
                 END) AS APScore
             FROM (SELECT TOP 7 Mark 
                     FROM [dbo].[Results]
-                    WHERE StudentID = @StudentID
+                    WHERE StudentID = @StudentID 
                 ) AS TopMarks
         ) AS APScores)
     END

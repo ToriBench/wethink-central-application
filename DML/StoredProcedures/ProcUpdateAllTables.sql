@@ -28,8 +28,6 @@ GO
 CREATE PROCEDURE uspUpdateUser
 @UserID int,
 @Email varchar(255),
-@FirstName varchar(255),
-@LastName varchar(255),
 @PasswordHash varchar(255),
 @UserRoleID int
 
@@ -82,8 +80,9 @@ GO
 
 CREATE PROCEDURE uspUpdateStudent
 @StudentID int,
-@UserID int,
-@AddressID int
+@FirstName varchar(255) = NULL,
+@LastName varchar(255) = NULL,
+@AddressID int = NULL
 
 AS
 BEGIN
@@ -91,10 +90,12 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Students]
-		SET [UserID] = @UserID,
-			[AddressID] = @AddressID
+		SET 
+			[AddressID] = isNull(@AddressID, [AddressID]),
+			[FirstName] = isNull(@FirstName, [FirstName]),
+			[LastName] = isNull(@LastName, [LastName])
 		WHERE [StudentID] = @StudentID
-
+		
 		IF @@Error <> 0
 		BEGIN
 			ROLLBACK TRANSACTION
@@ -156,16 +157,9 @@ GO
 
 /* Courses TABLE */
 CREATE PROCEDURE uspUpdateCourse
-<<<<<<< HEAD
-@CourseID int,
-@QualificationID int,
-@InstitutionID int,
-@FacultyID int,
-=======
 @CourseId int,
 @QualificationId int,
 @FacultyId int,
->>>>>>> main
 @MonthDuration int,
 @Name varchar(255),
 @Descr varchar(255),
@@ -177,14 +171,8 @@ BEGIN
 	BEGIN TRANSACTION
 
 		UPDATE [dbo].[Courses]
-<<<<<<< HEAD
-		SET [QualificationID] = @QualificationID,
-			[InstitutionID] = @InstitutionID,
-			[FacultyID] = @FacultyID,
-=======
 		SET [QualificationID] = @QualificationId,
 			[FacultyID] = @FacultyId,
->>>>>>> main
 			[MonthDuration] = @MonthDuration,
 			[Name] = @Name,
 			[Description] = @Descr,
@@ -253,14 +241,10 @@ GO
 
 /* FACULITIES TABLE*/
 CREATE PROCEDURE uspUpdateFaculty
-<<<<<<< HEAD
-@FacultyID int,
-=======
 @FacultyId int,
 @InstitutionID int,
->>>>>>> main
 @Name varchar(255),
-@Descr varchar(255)
+@Description varchar(255)
 
 AS
 BEGIN
@@ -270,7 +254,7 @@ BEGIN
 		UPDATE [dbo].[Faculties]
 		SET [InstitutionID]= @InstitutionID,
 			[Name] = @Name,
-			[Description] = @Descr
+			[Description] = @Description
 		WHERE [FacultyID] = @FacultyID 
 
 		IF @@Error <> 0
@@ -288,8 +272,8 @@ CREATE PROCEDURE uspUpdateAddress
 @AddressID int,
 @StreetAddress varchar(255),
 @City varchar(255),
-@State varchar(255),
-@Zip int,
+@Province varchar(255),
+@PostalCode int,
 @Country varchar(255)
 
 AS
@@ -301,8 +285,8 @@ BEGIN
 		SET 
 			[StreetAddress] = @StreetAddress,
 			[City] = @City,
-			[Province] = @State,
-			[PostalCode]  = @Zip,
+			[Province] = @Province,
+			[PostalCode]  = @PostalCode,
 			[Country] = @Country
 		WHERE [AddressID] = @AddressID 
 

@@ -13,7 +13,6 @@ GO
 
 /* USERS TABLE*/
 CREATE PROCEDURE uspAddUser
-@UserId int,
 @Email varchar(255),
 @PasswordHash varchar(255),
 @UserRoleId int
@@ -34,7 +33,7 @@ CREATE PROCEDURE uspAddStudent
 @UserID int,
 @FirstName varchar(255),
 @LastName varchar(255),
-@AddressID int,
+@AddressID int = NULL,
 @ApScore int = NULL
 
 AS
@@ -42,10 +41,14 @@ BEGIN
 	INSERT INTO [dbo].[Students]
 		([UserID], 
 		[FirstName], 
-		[LastName], 
-		[AddressID])
+		[LastName])
 	VALUES
-		(@UserID, @FirstName, @LastName, @AddressID)
+		(@UserID, @FirstName, @LastName)
+	IF NOT @AddressID IS NULL
+		INSERT INTO [dbo].[Students]
+		([AddressID])
+		VALUES 
+		(@AddressID)
 	IF NOT @ApScore IS NULL
 		INSERT INTO [dbo].[Students]
 		(ApScore)
@@ -86,16 +89,15 @@ GO
 /* INSTITUTION TABLE*/
 CREATE PROCEDURE uspAddInstitution
 @Name varchar(255),
-@Public bit,
 @AddressID int,
 @ApplicationLink varchar(255)
 
 AS
 BEGIN
 	INSERT INTO [dbo].[Institutions]
-		([Name], [AddressID], [Public], [ApplicationLink])
+		([Name], [AddressID], [ApplicationLink])
 	VALUES
-		(@Name, @AddressID, @Public, @ApplicationLink)
+		(@Name, @AddressID, @ApplicationLink)
 END
 GO
 
@@ -119,25 +121,22 @@ CREATE PROCEDURE uspAddCourse
 @QualificationID int, 
 @FacultyID int,
 @MonthDuration int,
-@FullTime bit,
 @Name varchar(255),
 @Description varchar(255),
 @ApScore int
 AS
 BEGIN
 	INSERT INTO [dbo].[Courses]
-		( [QualificationID],
+		(
 		[FacultyID],
 		[MonthDuration], 
 		[Name], 
-		[FullTime],
 		[Description], 
 		[ApScore] )
 	VALUES
 		( @FacultyID,
 		@MonthDuration, 
 		@Name, 
-		@FullTime,
 		@Description, 
 		@APScore )
 END
