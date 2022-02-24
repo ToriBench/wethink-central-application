@@ -14,9 +14,9 @@ AS
 		vInstitutionsWithCourses,
 		Requirements
 		INNER JOIN
-		Subjects ON Subjects.SubjectID = Requirements.SubjectID,
+		[dbo].[Subjects] ON Subjects.SubjectID = Requirements.SubjectID,
 		vStudentsWithResults,
-		Addresses
+		[dbo].[Addresses]
 	WHERE
 
 		(Students.ApScore >= Courses.ApScore
@@ -36,7 +36,7 @@ AS
 		AND
 		Addresses.AddressID = Institutions.AddressID 
 		AND Addresses.Province = 
-		(SELECT Addresses.Province FROM Addresses, Students
+		(SELECT Addresses.Province FROM [dbo].[Addresses], [dbo].[Students]
 		WHERE Addresses.AddressID = Students.AddressID AND Students.StudentID = @StudentID)
 		)
 		
