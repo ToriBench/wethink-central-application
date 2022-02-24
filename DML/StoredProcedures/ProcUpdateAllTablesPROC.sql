@@ -28,8 +28,6 @@ GO
 CREATE PROCEDURE uspUpdateUser
 @UserId int,
 @Email varchar(255),
-@FirstName varchar(255),
-@LastName varchar(255),
 @PasswordHash varchar(255),
 @UserRoleId int
 
@@ -40,8 +38,6 @@ BEGIN TRANSACTION
 
 update [dbo].[Users]
 set Email = @Email,
-FirstName = @FirstName,
-LastName = @LastName,
 PasswordHash = @PasswordHash,
 UserRoleID = @UserRoleId
 where UserID = @UserId
@@ -85,7 +81,10 @@ GO
 CREATE PROCEDURE uspUpdateStudent
 @StudentId int,
 @UserId int,
-@AddressId int
+@AddressId int,
+@FirstName varchar(255),
+@LastName varchar(255),
+@ApScore int
 
 AS
 BEGIN
@@ -94,7 +93,10 @@ BEGIN TRANSACTION
 
 update [dbo].[Students]
 set UserID = @UserId,
-AddressID = @AddressId
+AddressID = @AddressId,
+FirstName = @FirstName,
+LastName = @LastName,
+ApScore = @ApScore
 where StudentID = @StudentId
 
 if @@Error <> 0
@@ -136,7 +138,7 @@ GO
 /* REQUIREMENTS TABLE*/
 
 CREATE PROCEDURE uspUpdateRequirement
-@QualificationId int,
+@CourseID int,
 @SubjectId int,
 @MinimumMark int
 
@@ -147,7 +149,7 @@ BEGIN TRANSACTION
 
 update [dbo].[Requirements]
 set MinimumMark = @MinimumMark
-where QualificationID = @QualificationId 
+where CourseID = @CourseID 
 AND 
 SubjectID = @SubjectId
 
@@ -163,12 +165,8 @@ GO
 /* Qualifications TABLE */
 CREATE PROCEDURE uspUpdateQualification
 @QualificationId int,
-@InstitutionId int,
-@FacultyId int,
-@MonthDuration int,
 @Name varchar(255),
-@Descr varchar(255),
-@APScorer int
+@NQFLevel int
 
 AS
 BEGIN
@@ -176,12 +174,8 @@ BEGIN
 BEGIN TRANSACTION
 
 update [dbo].[Qualifications]
-set InstitutionID = @InstitutionId,
-FacultyID = @FacultyId,
-MonthDuration = @MonthDuration,
-[Name] = @Name,
-[Description] = @Descr,
-AP_Score = @APScorer
+set NQFLevel = @Name,
+[Name] = @Name
 where QualificationID = @QualificationId 
 
 if @@Error <> 0
@@ -252,8 +246,8 @@ CREATE PROCEDURE uspUpdateAddress
 @AddressID int,
 @StreetAddress varchar(255),
 @City varchar(255),
-@State varchar(255),
-@Zip int,
+@Province varchar(255),
+@PostalCode int,
 @Country varchar(255)
 
 AS
@@ -265,8 +259,40 @@ update [dbo].[Addresses]
 set 
 StreetAddress = @StreetAddress,
 City = @City,
-[State] = @State,
-Zip  = @Zip,
+Province = @Province,
+PostalCode  = @PostalCode,
+Country = @Country
+where AddressID = @AddressID 
+
+if @@Error <> 0
+begin
+ROLLBACK TRANSACTION
+return
+end
+COMMIT TRANSACTION
+END
+GO
+/* ADDRESSES TABLE*/
+
+CREATE PROCEDURE uspUpdateCourse
+@AddressID int,
+@StreetAddress varchar(255),
+@City varchar(255),
+@Province varchar(255),
+@PostalCode int,
+@Country varchar(255)
+
+AS
+BEGIN
+
+BEGIN TRANSACTION
+
+update [dbo].[Addresses]
+set 
+StreetAddress = @StreetAddress,
+City = @City,
+Province = @Province,
+PostalCode  = @PostalCode,
 Country = @Country
 where AddressID = @AddressID 
 
