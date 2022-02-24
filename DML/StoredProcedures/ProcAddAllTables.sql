@@ -1,5 +1,5 @@
 /* USER ROLES TABLE*/
-CREATE PROCEDURE AddUserRole
+CREATE PROCEDURE uspAddUserRole
 @UserRole varchar(255)
 
 AS
@@ -12,7 +12,7 @@ BEGIN
 GO
 
 /* USERS TABLE*/
-CREATE PROCEDURE AddUser
+CREATE PROCEDURE uspAddUser
 @UserId int,
 @Email varchar(255),
 @PasswordHash varchar(255),
@@ -30,7 +30,7 @@ END
 GO
 
 /* STUDENTS TABLE*/
-CREATE PROCEDURE AddStudent
+CREATE PROCEDURE uspAddStudent
 @UserID int,
 @FirstName varchar(255),
 @LastName varchar(255),
@@ -55,7 +55,7 @@ END
 GO
 
 /* RESULTS TABLE*/
-CREATE PROCEDURE AddResult
+CREATE PROCEDURE uspAddResult
 @StudentID int,
 @SubjectID int,
 @Mark int
@@ -70,7 +70,7 @@ END
 GO
 
 /* SUBJECT TABLE*/
-CREATE PROCEDURE AddSubject
+CREATE PROCEDURE uspAddSubject
 @Code varchar(255),
 @Name varchar(255)
 
@@ -84,7 +84,7 @@ END
 GO
 
 /* INSTITUTION TABLE*/
-CREATE PROCEDURE AddInstitution
+CREATE PROCEDURE uspAddInstitution
 @Name varchar(255),
 @Public bit,
 @AddressID int,
@@ -100,7 +100,7 @@ END
 GO
 
 /* FACULTIES TABLE*/
-CREATE PROCEDURE AddFaculty
+CREATE PROCEDURE uspAddFaculty
 @InstitutionID int, 
 @Name varchar(255),
 @Description varchar(255)
@@ -115,7 +115,7 @@ END
 GO
 
 /* COURSES TABLE*/
-CREATE PROCEDURE AddCourse
+CREATE PROCEDURE uspAddCourse
 @QualificationID int, 
 @FacultyID int,
 @MonthDuration int,
@@ -144,7 +144,7 @@ END
 GO
 
 /* QUALIFICATIONS TABLE*/
-CREATE PROCEDURE AddQualification
+CREATE PROCEDURE uspAddQualification
 @Name varchar(255),
 @NQFLevel int
 AS
@@ -159,7 +159,7 @@ END
 GO
 
 /* REQUIREMENTS TABLE*/
-CREATE PROCEDURE AddRequirement
+CREATE PROCEDURE uspAddRequirement
 @CourseID int,
 @SubjectID int, 
 @MinimumMark int
@@ -177,7 +177,7 @@ END
 GO
 
 /* ADDRESSES TABLE*/
-CREATE PROCEDURE AddAddress
+CREATE PROCEDURE uspAddAddress
 @City varchar(255),
 @Province varchar(255),
 @PostalCode int,
