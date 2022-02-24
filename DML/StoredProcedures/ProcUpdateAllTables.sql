@@ -240,12 +240,8 @@ GO
 
 /* FACULITIES TABLE*/
 CREATE PROCEDURE uspUpdateFaculty
-<<<<<<< HEAD
-@FacultyID int,
-=======
 @FacultyId int,
 @InstitutionID int,
->>>>>>> main
 @Name varchar(255),
 @Description varchar(255)
 
