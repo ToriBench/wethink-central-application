@@ -8,10 +8,8 @@ GO
 
 CREATE PROCEDURE uspUserLogin(@email varchar(255), @password varchar(255))
 	AS
-		SELECT UserID AS 'User ID',
-			   FirstName AS 'First Name',
-			   LastName AS 'Last Name',
-			   UserRoleID AS 'Role ID'
-		FROM Users
-		WHERE Email = @email AND PasswordHash = @password
+		SELECT [UserID] AS 'User ID',
+			   [UserRoleID] AS 'Role ID'
+		FROM [dbo].[Users]
+		WHERE [Email] = @email AND [PasswordHash] = @password
 GO

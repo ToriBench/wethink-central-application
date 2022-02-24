@@ -95,11 +95,14 @@ GO
 
 /* REQUIREMENTS TABLE*/
 CREATE PROCEDURE uspDeleteRequirement
-@RequirementID int
+@SubjectID int,
+@CourseID int
 AS
 BEGIN
 	   DELETE FROM [dbo].[Requirements]
-	   WHERE RequirementID=@RequirementID
+	   WHERE 
+			[CourseID] = @CourseID
+		AND [SubjectID] = @SubjectID
 END
 GO
 
@@ -114,13 +117,13 @@ END
 GO
 
 /* STUDENTQUALIFICATIONS TABLE*/
-CREATE PROCEDURE uspDeleteStudentQualification
+CREATE PROCEDURE uspDeleteStudentSavedCourse
 @StudentID int,
-@QualificationID int
+@CourseID int
 AS
 BEGIN
-	DELETE FROM [dbo].[StudentQualifications]
+	DELETE FROM [dbo].[StudentSavedCourses]
 	WHERE [StudentID] = @StudentID 
-	AND [QualificationID] = @QualificationID
+	AND [CourseID] = @CourseID
 END
 GO
