@@ -33,7 +33,7 @@ CREATE PROCEDURE uspAddStudent
 @UserID int,
 @FirstName varchar(255),
 @LastName varchar(255),
-@AddressID int,
+@AddressID int = NULL,
 @ApScore int = NULL
 
 AS
@@ -41,10 +41,14 @@ BEGIN
 	INSERT INTO [dbo].[Students]
 		([UserID], 
 		[FirstName], 
-		[LastName], 
-		[AddressID])
+		[LastName])
 	VALUES
-		(@UserID, @FirstName, @LastName, @AddressID)
+		(@UserID, @FirstName, @LastName)
+	IF NOT @AddressID IS NULL
+		INSERT INTO [dbo].[Students]
+		([AddressID])
+		VALUES 
+		(@AddressID)
 	IF NOT @ApScore IS NULL
 		INSERT INTO [dbo].[Students]
 		(ApScore)
