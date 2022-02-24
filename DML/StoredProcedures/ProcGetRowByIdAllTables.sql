@@ -4,7 +4,7 @@ GO
 CREATE PROC uspGetUserById(@id int)
 AS
 BEGIN
-     Select * from Users where
+     Select * from  [dbo].[Users] where
 	 UserID = @id
 END
 GO
@@ -12,7 +12,7 @@ GO
 CREATE PROC uspGetUserRoleById(@id int)
 AS
 BEGIN
-  SELECT * FROM UserRoles 
+  SELECT * FROM  [dbo].[UserRoles]
   WHERE UserRoleID = @id
   END
 GO
@@ -20,7 +20,7 @@ GO
 CREATE PROC uspGetStudentById(@id int)
 AS
 BEGIN
-  SELECT * FROM Students
+  SELECT * FROM  [dbo].[Students]
   WHERE StudentID = @id
   END
 GO
@@ -28,7 +28,7 @@ GO
 CREATE PROC uspGetResultsById(@StudentId int, @SubjectId int)
 AS
 BEGIN 
-   SELECT * FROM Results
+   SELECT * FROM  [dbo].[Results]
    WHERE StudentID = @StudentId 
    AND
    SubjectID = @SubjectId
@@ -38,7 +38,7 @@ GO
 CREATE PROC uspGetSubjectById(@Id int)
 AS
 BEGIN
-    SELECT * FROM Subjects
+    SELECT * FROM  [dbo].[Subjects]
 	WHERE SubjectID = @Id
 
 	END
@@ -47,7 +47,7 @@ GO
 CREATE PROC uspGetAddressById(@Id int)
 AS
 BEGIN
-    SELECT * FROM Addresses
+    SELECT * FROM  [dbo].[Addresses]
 	WHERE AddressID = @Id
 	END
 
@@ -56,7 +56,7 @@ GO
 CREATE PROC uspGetInstitutitionById(@Id int)
 AS
 BEGIN
-    SELECT * FROM Institutions
+    SELECT * FROM  [dbo].[Institutions]
 	WHERE InstitutionID = @Id
 	END
 
@@ -65,7 +65,7 @@ GO
 CREATE PROC uspGetQualificationById(@Id int)
 AS
 BEGIN
-   SELECT * FROM Qualifications
+   SELECT * FROM  [dbo].[Qualifications]
    WHERE QualificationID = @Id
    END
 
@@ -74,7 +74,7 @@ GO
 CREATE PROC uspGetRequirementById(@QualificationId int, @SubjectId int)
 AS
 BEGIN 
-    SELECT * FROM Requirements
+    SELECT * FROM  [dbo].[Requirements]
 	WHERE QualificationID = @QualificationId
 	AND
 	SubjectID = @SubjectId
