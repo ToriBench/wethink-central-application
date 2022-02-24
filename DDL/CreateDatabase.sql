@@ -116,7 +116,6 @@ GO
 --------------------------------------------------------------------
 CREATE TABLE [dbo].[Courses](
 	[CourseID] [int] IDENTITY(1,1) NOT NULL,
-	[InstitutionID] [int] NOT NULL,
 	[QualificationID] [int] NULL,
 	[FacultyID] [int] NULL,
 	[MonthDuration] [int] NULL,
