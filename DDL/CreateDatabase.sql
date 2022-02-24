@@ -7,7 +7,7 @@ USE WeThinkDB
 GO
 CREATE TABLE [dbo].[Addresses](
 	[AddressID] [int] IDENTITY(1,1) NOT NULL,
-	[StreetAddress] [varchar](255) NULL,
+	[StreetAddress] [varchar](255) NOT NULL,
 	[City] [varchar](255) NOT NULL,
 	[Province] [varchar](255) NOT NULL,
 	[PostalCode] [int] NOT NULL,
@@ -21,7 +21,7 @@ GO
 --------------------------------------------------------------------
 CREATE TABLE [dbo].[UserRoles](
 	[UserRoleID] [int] IDENTITY(1,1) NOT NULL,
-	[UserRole] [varchar](255) NULL,
+	[UserRole] [varchar](255) UNIQUE NULL,
 CONSTRAINT PK_UserRoles PRIMARY KEY CLUSTERED 
 (
 	[UserRoleId] ASC
@@ -33,7 +33,7 @@ GO
 
 CREATE TABLE [dbo].[Users](
 	[UserID] [int] IDENTITY(1,1) NOT NULL,
-	[Email] [varchar](255) NOT NULL,
+	[Email] [varchar](255) UNIQUE NOT NULL,
 	[PasswordHash] [varchar](255) NOT NULL,
 	[UserRoleID] [int] NOT NULL,
 CONSTRAINT PK_Users PRIMARY KEY CLUSTERED
@@ -49,7 +49,7 @@ CREATE TABLE [dbo].[Students](
 	[StudentID] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [varchar](255) NOT NULL,
 	[LastName] [varchar](255) NOT NULL,
-	[UserID] [int] NOT NULL,
+	[UserID] [int] UNIQUE NOT NULL,
 	[AddressID] [int] NULL,
 	[ApScore] [int] NULL,
 CONSTRAINT PK_Students PRIMARY KEY CLUSTERED 
@@ -67,7 +67,7 @@ GO
 
 CREATE TABLE [dbo].[Institutions](
 	[InstitutionID] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](255) NOT NULL,
+	[Name] [varchar](255) UNIQUE NOT NULL,
 	[AddressID] int NULL,
 	[ApplicationLink] [varchar](255) NULL,
 	CONSTRAINT [PK_Institutions] PRIMARY KEY CLUSTERED (
@@ -104,7 +104,10 @@ CREATE TABLE [dbo].[Qualifications](
 CONSTRAINT [PK_Qualifications] PRIMARY KEY CLUSTERED (
 	QualificationID ASC
 ),
-CONSTRAINT [CK_NQFLevel] CHECK ([NQFLevel] >= 5 AND [NQFLevel] <= 10)
+CONSTRAINT [CK_NQFLevel] CHECK ([NQFLevel] >= 5 AND [NQFLevel] <= 10),
+UNIQUE (
+	[Name],[NQFLevel]
+)
 )
 GO
 --------------------------------------------------------------------
@@ -124,6 +127,9 @@ CONSTRAINT [FK_CoursesQualification]
 	FOREIGN KEY ([QualificationID]) REFERENCES [Qualifications](QualificationID) ON DELETE CASCADE,
 CONSTRAINT [FK_CoursesFaculty]
 	FOREIGN KEY ([FacultyID]) REFERENCES [Faculties](FacultyID) ON DELETE CASCADE,
+UNIQUE (
+	[InstitutionID],[QualificationID], [FacultyID], [Name]
+)
 )
 GO
 --------------------------------------------------------------------
