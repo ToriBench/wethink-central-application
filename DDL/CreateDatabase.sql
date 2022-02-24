@@ -88,6 +88,8 @@ CREATE TABLE [dbo].[Faculties](
 	CONSTRAINT [PK_Faculties] PRIMARY KEY CLUSTERED (
 		FacultyID ASC
 	),
+	CONSTRAINT [FK_FacultiesInstitution]
+		FOREIGN KEY (InstitutionID) REFERENCES Addresses(InstitutionID) ON DELETE CASCADE,
 	UNIQUE (
 		[InstitutionID],[Name]
 	)
