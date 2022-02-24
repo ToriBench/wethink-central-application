@@ -14,6 +14,9 @@ CREATE TABLE [dbo].[Addresses](
 	[Country] [varchar](255) NOT NULL,
 	CONSTRAINT [PK_Addresses] PRIMARY KEY CLUSTERED (
 		AddressID ASC
+	),
+	UNIQUE(
+		[StreetAddress], [City], [Province], [PostalCode], [Country]
 	)
 )
 GO
