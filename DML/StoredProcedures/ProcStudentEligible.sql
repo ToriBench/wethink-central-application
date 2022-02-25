@@ -26,14 +26,14 @@ AS
 		WHERE'
 
 	SET @WhereClause = 
-			'(
+			'
 				(Res.StudentID = @StudentID 
 				AND Inst.CourseID = Req.CourseID
 				AND Res.SubjectID = Req.SubjectID
 				AND Req.MinimumMark <= Res.Mark)
 				OR
 				Inst.CourseID = noReq.CourseID
-			)'
+			'
 
 	IF(@Province = 1)
 	BEGIN
