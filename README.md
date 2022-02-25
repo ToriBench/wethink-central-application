@@ -69,6 +69,7 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://github.com/ToriBench/wethink-central-application/blob/main/README.md)
+<a href="https://lucid.app/lucidchart/ab739a27-1657-4495-8c2f-b7ad6d4bf056/edit?invitationId=inv_91befef5-f7cf-48ce-8418-07077ed5292e&page=18_45#=">Go to LucidChart ERD</a>
 
 WeThink Central Application is a platform that enables potential student to determine which courses they would be eligible for based 
 on their results. 
